@@ -1,6 +1,6 @@
 <template>
 <div>
-  test
+  <p>test</p>
 </div>
 </template>
 
@@ -10,6 +10,10 @@ name: "Login"
 }
 </script>
 
-<style scoped>
-
+<style  lang="scss">
+div{
+  p{
+    color: $red;
+  }
+}
 </style>

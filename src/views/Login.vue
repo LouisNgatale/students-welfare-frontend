@@ -1,6 +1,8 @@
 <template>
 <div>
-  <p>test</p>
+  <p class="app-name">Students Welfare System</p>
+  <p class="sub-heading">For an improved student welfare
+    experience!</p>
 </div>
 </template>
 
@@ -10,10 +12,17 @@ name: "Login"
 }
 </script>
 
-<style  lang="scss">
-div{
+<style scoped lang="scss">
+.app-name{
+  font-size: 18px;
+  margin-bottom: 0;
+
+}
+.sub-heading{
+  font-size: 28px;
   p{
-    color: $red;
+    margin: 0;
   }
+
 }
 </style>

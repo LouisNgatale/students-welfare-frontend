@@ -1,10 +1,12 @@
 <template>
-<div></div>
+<div>
+  test
+</div>
 </template>
 
 <script>
 export default {
-name: "Appeal"
+name: "Login"
 }
 </script>
 

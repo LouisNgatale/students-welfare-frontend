@@ -41,14 +41,18 @@
                     <div class="form">
                         <form action="">
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="fullName" placeholder="name@example.com"
-                                       v-model="formData.fullName" @keyup="fullName">
+                                <input type="text" class="form-control" id="fullName" autocomplete="off" placeholder="name@example.com"
+                                       v-model="formData.fullName"
+                                       @keyup="fullName">
                                 <label for="fullName">Full Name</label>
                                 <span class="error" v-if="formData.errors.fullName">{{ formData.errors.fullName }}</span>
                             </div>
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="registrationNumber" placeholder="180000000" v-model="formData.registrationNumber">
+                                <input type="email" class="form-control" id="registrationNumber" placeholder="180000000"
+                                       v-model="formData.registrationNumber"
+                                       @keyup="registrationNumber">
                                 <label for="registrationNumber">Registration Number</label>
+                                <span class="error" v-if="formData.errors.registrationNumber">{{ formData.errors.registrationNumber }}</span>
                             </div>
 
                             <div class="row g-2">
@@ -76,16 +80,30 @@
                             </div>
 
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="phoneNumber" placeholder="text" v-model="formData.phoneNumber">
+                                <input type="password" class="form-control" id="phoneNumber" placeholder="text"
+                                       v-model="formData.phoneNumber"
+                                       @keyup="phoneNumber">
                                 <label for="phoneNumber">Phone Number</label>
+                                <span class="error" v-if="formData.errors.phoneNumber">{{ formData.errors.phoneNumber }}</span>
+
                             </div>
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="password" placeholder="Password" v-model="formData.password">
+                                <input type="password" class="form-control" id="password" placeholder="Password"
+                                       v-model="formData.password"
+                                       @keyup="password">
                                 <label for="password">Password</label>
+                                <span class="error" v-if="formData.errors.password">{{ formData.errors.password }}</span>
+                                <span class="pwd_success" v-if="formData.success.password">{{ formData.success.password }}</span>
+
                             </div>
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="confirmPassword" placeholder="Password" v-model="formData.confirmPassword">
+                                <input type="password" class="form-control" id="confirmPassword" placeholder="Password"
+                                       v-model="formData.confirmPassword"
+                                       @keyup="confirmPassword">
                                 <label for="confirmPassword">Confirm Password</label>
+                                <span class="error" v-if="formData.errors.confirmPassword">{{ formData.errors.confirmPassword }}</span>
+                                <span class="pwd_success" v-if="formData.success.confirmPassword">{{ formData.success.confirmPassword }}</span>
+
                             </div>
                         </form>
                     </div>
@@ -122,29 +140,91 @@ export default {
                     phoneNumber:"",
                     password:"",
                     confirmPassword:""
+                },
+                success:{
+                    password:"",
+                    confirmPassword:""
                 }
             },
             patterns:{
                 phoneNumber:/^\+?\d{12}$/ig,
+                fullName:/^([a-z]+)$/ig,
                 registrationNumber:/^\d{12}$/ig,
                 email: /^([a-z\d\\.-]+)@([a-z]{2,8})\.([a-z]{2,8})(\.[a-z]{2,8})?$/ig ,
                 password:/^[\d\w]{8,20}$/ig,
-                fullName:/^([a-z]+)\s([a-z]+)$/ig
+                // fullName:/^([a-z]+)\s([a-z]+)$/ig,
             }
         }
     },
     methods:{
-        fullName:function (){
-            let value = this.formData.fullName;
+        fullName (){
+            const value = this.formData.fullName;
+            //Works :)
+            const pattern = /^([a-z]+)\s([a-z]+)$/ig;
+            // const pattern = this.patterns.fullName;
             if (value !== "") {
-                if (this.patterns.fullName.test(value) !== true){
-                    console.log(this.patterns.fullName.test(value))
+                if (pattern.test(value)) {
+                    this.formData.errors.fullName = false;
+                } else {
                     this.formData.errors.fullName = "Enter valid name";
-                }else {
-                    this.formData.errors.fullName = "";
                 }
             } else {
                 this.formData.errors.fullName = "Full name is required"
+            }
+        },
+        registrationNumber(){
+            const value = this.formData.registrationNumber;
+            const pattern = /^\d{12}$/ig;
+            if (value !== "") {
+                if (pattern.test(value)) {
+                    this.formData.errors.registrationNumber = false;
+                } else {
+                    this.formData.errors.registrationNumber = "Enter valid registration number";
+                }
+            } else {
+                this.formData.errors.registrationNumber = "Registration number is required"
+            }
+        },
+        phoneNumber(){
+            const value = this.formData.phoneNumber;
+            const pattern = /^\+?\d{12}$/ig;
+            if (value !== "") {
+                if (pattern.test(value)) {
+                    this.formData.errors.phoneNumber = false;
+                } else {
+                    this.formData.errors.phoneNumber = "Enter valid phone number number";
+                }
+            } else {
+                this.formData.errors.phoneNumber = "Phone number is required"
+            }
+        },
+        password(){
+            const value = this.formData.password;
+            const pattern =/^[\d\w]{8,20}$/ig;
+            if (value !== "") {
+                if (pattern.test(value)) {
+                    this.formData.errors.password = false;
+                    this.formData.success.password = "Password is strong";
+
+                } else {
+                    this.formData.errors.password = "Password is weak";
+                }
+            } else {
+                this.formData.errors.password = "Password is required"
+            }
+        },
+        confirmPassword(){
+            const password1 = this.formData.password;
+            const password2 = this.formData.confirmPassword;
+            if (password2 !== "") {
+                if (password2 === password1) {
+                    this.formData.errors.confirmPassword = false;
+                    this.formData.success.confirmPassword = "Password matches";
+                } else {
+                    this.formData.errors.confirmPassword = "Password doesn't match";
+                }
+            } else {
+                this.formData.errors.confirmPassword = "Confirm password"
             }
         },
         loginForm:function (){
@@ -275,6 +355,12 @@ export default {
 
         .error{
             color: $danger;
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        .pwd_success{
+            color: $success;
             font-size: 12px;
             font-style: italic;
         }

@@ -17,6 +17,7 @@
                 <img class="" src="../assets/images/register_bg.png" alt="">
             </div>
 
+
             <!--    Login Form      -->
             <div class="col-md-4 login-container">
                 <div class="login-contents">
@@ -31,10 +32,10 @@
                         <div @click="registerForm" id="register-option" class="register-option active">
                             <span>Register</span>
                             <span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="13.381" height="8.642" viewBox="0 0 13.381 8.642">
-                  <path class="caret" id="caret" d="M5.98,19.087.291,13.4a1,1,0,0,1,0-1.418l.945-.945a1,1,0,0,1,1.418,0l4.032,4.032,4.032-4.032a1,1,0,0,1,1.418,0l.945.945a1,1,0,0,1,0,1.418L7.394,19.087a1,1,0,0,1-1.414,0Z" transform="translate(0.004 -10.74)" fill="#989898"/>
-                </svg>
-            </span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13.381" height="8.642" viewBox="0 0 13.381 8.642">
+                                  <path class="caret" id="caret" d="M5.98,19.087.291,13.4a1,1,0,0,1,0-1.418l.945-.945a1,1,0,0,1,1.418,0l4.032,4.032,4.032-4.032a1,1,0,0,1,1.418,0l.945.945a1,1,0,0,1,0,1.418L7.394,19.087a1,1,0,0,1-1.414,0Z" transform="translate(0.004 -10.74)" fill="#989898"/>
+                                </svg>
+                            </span>
                         </div>
                     </div>
 
@@ -55,6 +56,7 @@
                                 <span class="error" v-if="formData.errors.registrationNumber">{{ formData.errors.registrationNumber }}</span>
                             </div>
 
+                            <!--            TODO: Populate selection forms          -->
                             <div class="row g-2">
                                 <div class="col-md">
                                     <div class="form-floating">
@@ -67,10 +69,11 @@
                                     </div>
                                 </div>
 
+                                <!--            TODO: Populate selection forms          -->
                                 <div class="col-md">
                                     <div class="form-floating">
                                         <select class="form-select" id="class" aria-label="Floating label select example">
-                                            <option selected>Year</option>
+                                            <option selected>Class</option>
                                             <option value="1">One</option>
                                             <option value="2">Two</option>
                                             <option value="3">Three</option>
@@ -128,15 +131,21 @@ export default {
                 fullName:"",
                 registrationNumber:"",
                 course:"",
-                year:"",
+                class:"",
                 phoneNumber:"",
                 password:"",
                 confirmPassword:"",
+                courses:{
+
+                },
+                levels:{
+
+                },
                 errors:{
                     fullName:"",
                     registrationNumber:"",
                     course:"",
-                    year:"",
+                    class:"",
                     phoneNumber:"",
                     password:"",
                     confirmPassword:""

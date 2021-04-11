@@ -64,6 +64,13 @@
 export default {
 name: "Login",
 methods:{
+    data(){
+      return{
+          formData:{
+
+          }
+      }
+    },
     loginForm:function (){
         // eslint-disable-next-line no-undef
       $("#login-option").addClass("active");
@@ -74,6 +81,7 @@ methods:{
     registerForm:function (){
         // eslint-disable-next-line no-undef
       $("#register-option").addClass("active");
+        this.$router.push('/register')
 
         // eslint-disable-next-line no-undef
       $("#login-option").removeClass("active");
@@ -96,6 +104,10 @@ methods:{
     width: 550px;
     margin: auto;
     font-weight: bold;
+}
+.bg{
+    display: flex;
+    justify-content: center;
 }
 .bg img{
     height: 500px;
@@ -181,7 +193,12 @@ methods:{
             border-radius: 12px;
             text-transform: none;
             width: 100%;
+            outline: none;
+            &:focus{
+                outline: none;
+            }
         }
+
         margin-bottom: 10px;
         margin-top: 40px;
     }

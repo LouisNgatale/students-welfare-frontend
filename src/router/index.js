@@ -44,19 +44,19 @@ const routes = [
         component: Specials
       },
       {
-        path:'student/hostel/request',
+        path:'hostel/request',
         component: Request
       },
       {
-        path:'student/welfare/advice',
+        path:'welfare/advice',
         component: Advice
       },
       {
-        path: 'student/welfare/suggestions',
+        path: 'welfare/suggestions',
         component: Suggestions
       },
       {
-        path:'student/welfare/rules',
+        path:'welfare/rules',
         component: Rules
       }
     ],

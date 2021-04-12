@@ -36,7 +36,9 @@
 
             <!--             TODO: Dropdown options         -->
              <div class="nav-category-wrapper">
-                  <div class="nav-category-container">
+                  <div
+                      class="nav-category-container"
+                      @click="showAcademicsMenu">
                       <span class="icon">
                           <img v-if="isActive" src="../../assets/icons/academics-active.svg" alt="">
                           <img v-else src="../../assets/icons/academics.svg" alt="">
@@ -44,7 +46,7 @@
                       <span>Academics</span>
                   </div>
 
-                     <ul class="nav-subcategories">
+                     <ul v-if="menu.academics.show" class="nav-subcategories">
                          <li class="nav-sub-item">
                              <!--Sub categories-->
                              <router-link
@@ -104,21 +106,111 @@
                      </ul>
               </div>
 
-             <div class="nav-item">
-                  <div>
-                      <span class="icon">
-                      <img src="../../assets/icons/hostel.svg" alt="">
-                  </span>
-                      <span>Hostel</span>
-                  </div>
 
-              </div>
-             <div class="nav-item">
-                  <span class="icon">
-                      <img src="../../assets/icons/welfare.svg" alt="">
-                  </span>
-                  <span>Student Welfare</span>
-              </div>
+             <div class="nav-category-wrapper">
+                 <div
+                     class="nav-category-container"
+                     @click="showHostelMenu">
+                      <span class="icon">
+                          <img v-if="isActive" src="../../assets/icons/hostel-active.svg" alt="">
+                          <img v-else src="../../assets/icons/hostel.svg" alt="">
+                      </span>
+                     <span>Hostel</span>
+
+                 </div>
+
+                 <ul v-if="menu.hostel.show" class="nav-subcategories">
+                     <li class="nav-sub-item">
+                         <!--Sub categories-->
+                         <router-link
+                             to="/student/hostel/request"
+                             custom
+                             v-slot="{ href, route, isActive, navigate, }">
+                             <a :href="href" @click="navigate">
+                                 <div
+                                     :class="[isActive && 'router-link-active']">
+                                         <span class="icon">
+                                              <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
+                                              <img v-else src="../../assets/icons/subcategory.svg" alt="">
+                                         </span>
+                                     <span>Request</span>
+                                 </div>
+                             </a>
+                         </router-link>
+                     </li>
+                 </ul>
+             </div>
+
+             <div class="nav-category-wrapper">
+                 <div
+                     class="nav-category-container"
+                     @click="showWelfareMenu">
+                      <span class="icon">
+                          <img v-if="isActive" src="../../assets/icons/welfare-active.svg" alt="">
+                          <img v-else src="../../assets/icons/welfare.svg" alt="">
+                      </span>
+                     <span>Student Welfare</span>
+                 </div>
+
+                 <ul v-if="menu.welfare.show" class="nav-subcategories">
+                     <li class="nav-sub-item">
+                         <!--Sub categories-->
+                         <router-link
+                             to="/student/welfare/advice"
+                             custom
+                             v-slot="{ href, route, isActive, navigate, }">
+                             <a :href="href" @click="navigate">
+                                 <div
+                                     :class="[isActive && 'router-link-active']">
+                                         <span class="icon">
+                                              <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
+                                              <img v-else src="../../assets/icons/subcategory.svg" alt="">
+                                         </span>
+                                     <span>Ask for advice</span>
+                                 </div>
+                             </a>
+                         </router-link>
+                     </li>
+
+                     <li class="nav-sub-item">
+                         <!--Sub categories-->
+                         <router-link
+                             to="/student/welfare/suggestions"
+                             custom
+                             v-slot="{ href, route, isActive, navigate, }">
+                             <a :href="href" @click="navigate">
+                                 <div
+                                     :class="[isActive && 'router-link-active']">
+                                         <span class="icon">
+                                              <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
+                                              <img v-else src="../../assets/icons/subcategory.svg" alt="">
+                                         </span>
+                                     <span>Make suggestions</span>
+                                 </div>
+                             </a>
+                         </router-link>
+                     </li>
+
+                     <li class="nav-sub-item">
+                         <!--Sub categories-->
+                         <router-link
+                             to="/student/welfare/rules"
+                             custom
+                             v-slot="{ href, route, isActive, navigate, }">
+                             <a :href="href" @click="navigate">
+                                 <div
+                                     :class="[isActive && 'router-link-active']">
+                                         <span class="icon">
+                                              <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
+                                              <img v-else src="../../assets/icons/subcategory.svg" alt="">
+                                         </span>
+                                     <span>Rules and regulations</span>
+                                 </div>
+                             </a>
+                         </router-link>
+                     </li>
+                 </ul>
+             </div>
          </div>
      </div>
     <!--    Contents Rendered here      -->
@@ -136,9 +228,26 @@ export default {
           menu:{
               academics:{
                   show:false
+              },
+              hostel:{
+                  show:false
+              },
+              welfare:{
+                  show:false
               }
           }
       }
+    },
+    methods:{
+        showAcademicsMenu(){
+            this.menu.academics.show = !this.menu.academics.show;
+        },
+        showHostelMenu(){
+            this.menu.hostel.show = !this.menu.hostel.show;
+        },
+        showWelfareMenu(){
+            this.menu.welfare.show = !this.menu.welfare.show;
+        }
     }
 }
 </script>

@@ -21,6 +21,7 @@
     <div class="row">
         <div class="col">
             <table class="table">
+
                 <tr class="table-heading">
                     <th>S/N</th>
                     <th>Subject</th>
@@ -29,25 +30,33 @@
                     <th>Status</th>
                     <th>Progress</th>
                 </tr>
+
                 <tr class="td">
                     <td class="sn">1</td>
                     <td>Kiswahili</td>
                     <td>01/12/2020</td>
                     <td>01/12/2020</td>
                     <td>
-                        Appealed
+                        Approved
                         <span>
                             <img src="../../../assets/icons/Done.svg" alt="">
                         </span>
                     </td>
-                    <td>1</td>
+                    <td>
+                        <div>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">100%</div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
+
                 <tr class="td">
                     <td class="sn">2</td>
                     <td>Civics</td>
                     <td>01/12/2020</td>
                     <td>Pending</td>
-                    <td class="justify-content-between">
+                    <td class="">
                         <span>
                             Pending
                         </span>
@@ -55,11 +64,40 @@
                             <img src="../../../assets/icons/Pending.svg" alt="">
                         </span>
                     </td>
-                    <td>1</td>
+                    <td>
+                        <div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="td">
+                    <td class="sn">2</td>
+                    <td>Biology</td>
+                    <td>01/12/2020</td>
+                    <td>01/12/2020</td>
+                    <td class="">
+                        <span>
+                            Declined
+                        </span>
+                        <span>
+                            <img src="../../../assets/icons/Cross.svg" alt="">
+                        </span>
+                    </td>
+                    <td>
+                        <div>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             </table>
         </div>
     </div>
+
 </div>
 </template>
 
@@ -110,7 +148,10 @@ name: "Appeal"
     }
     tr:nth-child(even) {background-color: white;}
 
-
+    .progress{
+        border-radius: 10px;
+        background: $grey-300;
+    }
 
 }
 </style>

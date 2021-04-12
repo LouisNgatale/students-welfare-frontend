@@ -10,7 +10,7 @@
         <div class="row ">
             <div class="col ">
                 <div class="top-header my-2">
-                    <span>Appeals</span>
+                    <span>Specials</span>
                     <button class="add_appeal">
                         <img src="../../../assets/icons/plus.svg" alt="">
                     </button>
@@ -25,7 +25,7 @@
                     <tr class="table-heading">
                         <th>S/N</th>
                         <th>Subject</th>
-                        <th>Appealed on</th>
+                        <th>Requested on</th>
                         <th>Updated on</th>
                         <th>Status</th>
                         <th>Progress</th>

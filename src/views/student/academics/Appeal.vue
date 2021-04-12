@@ -1,5 +1,5 @@
 <template>
-<div></div>
+<div>Appeal</div>
 </template>
 
 <script>

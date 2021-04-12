@@ -28,7 +28,7 @@ const routes = [
     path: '/student',
     children:[
       {
-        path:'',
+        path:'home',
         component:Dashboard
       },
       {

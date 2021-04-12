@@ -17,18 +17,40 @@
 
         <!--         Navigation Menu           -->
          <div class="nav-menu">
-              <div class="nav-item active">
-                  <span class="icon">
-                      <img src="../../assets/icons/dashboard-active.svg" alt="">
-                  </span>
-                  <span>Dashboard</span>
-              </div>
-             <div class="nav-item">
-                  <span class="icon">
-                      <img src="../../assets/icons/academics.svg" alt="">
-                  </span>
-                  <span>Academics</span>
-              </div>
+             <router-link
+                 to="/student/home"
+                 custom
+                 v-slot="{ href, route, isActive, navigate, }">
+                 <a :href="href" @click="navigate">
+                     <div
+                         :class="[isActive && 'router-link-active']"
+                         class="nav-item">
+                      <span class="icon">
+                          <img v-if="isActive" src="../../assets/icons/dashboard-active.svg" alt="">
+                          <img v-else src="../../assets/icons/dashboard.svg" alt="">
+                      </span>
+                         <span>Dashboard</span>
+                     </div>
+                 </a>
+             </router-link>
+
+             <router-link
+                 to="/student/academics/appeal"
+                 custom
+                 v-slot="{ href, route, isActive, navigate, }">
+                 <a :href="href" @click="navigate">
+                     <div
+                         :class="[isActive && 'router-link-active']"
+                         class="nav-item">
+                      <span class="icon">
+                          <img v-if="isActive" src="../../assets/icons/academics-active.svg" alt="">
+                          <img v-else src="../../assets/icons/academics.svg" alt="">
+                      </span>
+                         <span>Academics</span>
+                     </div>
+                 </a>
+             </router-link>
+
              <div class="nav-item">
                   <span class="icon">
                       <img src="../../assets/icons/hostel.svg" alt="">
@@ -61,6 +83,10 @@ export default {
     width: 350px;
     height: 100%;
     position: fixed;
+    a{
+        text-decoration: none;
+        color: $grey-400;
+    }
     .nav-header{
         display: flex;
         align-items: center;
@@ -101,7 +127,7 @@ export default {
                 transition: all .3s;
             }
         }
-        .active{
+        .router-link-active  {
             background: $blue-100;
             color: $primary;
             border-right: 4px solid $primary;

@@ -34,28 +34,84 @@
                  </a>
              </router-link>
 
-             <router-link
-                 to="/student/academics/appeal"
-                 custom
-                 v-slot="{ href, route, isActive, navigate, }">
-                 <a :href="href" @click="navigate">
-                     <div
-                         :class="[isActive && 'router-link-active']"
-                         class="nav-item">
+            <!--             TODO: Dropdown options         -->
+             <div class="nav-category-wrapper">
+                  <div class="nav-category-container">
                       <span class="icon">
                           <img v-if="isActive" src="../../assets/icons/academics-active.svg" alt="">
                           <img v-else src="../../assets/icons/academics.svg" alt="">
                       </span>
-                         <span>Academics</span>
-                     </div>
-                 </a>
-             </router-link>
+                      <span>Academics</span>
+                  </div>
+
+                     <ul class="nav-subcategories">
+                         <li class="nav-sub-item">
+                             <!--Sub categories-->
+                             <router-link
+                                 to="/student/academics/appeal"
+                                 custom
+                                 v-slot="{ href, route, isActive, navigate, }">
+                                 <a :href="href" @click="navigate">
+                                     <div
+                                          :class="[isActive && 'router-link-active']">
+                                         <span class="icon">
+                                              <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
+                                              <img v-else src="../../assets/icons/subcategory.svg" alt="">
+                                         </span>
+                                         <span>Appeal</span>
+                                     </div>
+                                 </a>
+                             </router-link>
+                         </li>
+
+                         <li class="nav-sub-item">
+                             <!--Sub categories-->
+                             <router-link
+                                 to="/student/academics/postpone"
+                                 custom
+                                 v-slot="{ href, route, isActive, navigate, }">
+                                 <a :href="href" @click="navigate">
+                                     <div
+                                         :class="[isActive && 'router-link-active']">
+                                         <span class="icon">
+                                              <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
+                                              <img v-else src="../../assets/icons/subcategory.svg" alt="">
+                                         </span>
+                                         <span>Postpone</span>
+                                     </div>
+                                 </a>
+                             </router-link>
+                         </li>
+
+                         <li class="nav-sub-item">
+                             <!--Sub categories-->
+                             <router-link
+                                 to="/student/academics/specials"
+                                 custom
+                                 v-slot="{ href, route, isActive, navigate, }">
+                                 <a :href="href" @click="navigate">
+                                     <div
+                                         :class="[isActive && 'router-link-active']">
+                                         <span class="icon">
+                                              <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
+                                              <img v-else src="../../assets/icons/subcategory.svg" alt="">
+                                         </span>
+                                         <span>Specials</span>
+                                     </div>
+                                 </a>
+                             </router-link>
+                         </li>
+                     </ul>
+              </div>
 
              <div class="nav-item">
-                  <span class="icon">
+                  <div>
+                      <span class="icon">
                       <img src="../../assets/icons/hostel.svg" alt="">
                   </span>
-                  <span>Hostel</span>
+                      <span>Hostel</span>
+                  </div>
+
               </div>
              <div class="nav-item">
                   <span class="icon">
@@ -74,13 +130,26 @@
 
 <script>
 export default {
-  name: "Home"
+  name: "Home",
+    data(){
+      return{
+          menu:{
+              academics:{
+                  show:false
+              }
+          }
+      }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
+ul{
+    list-style-type: none;
+    margin-bottom: 0;
+}
 .nav-container{
-    width: 350px;
+    width: 300px;
     height: 100%;
     position: fixed;
     a{
@@ -124,13 +193,49 @@ export default {
             &:hover{
                 background: $blue-100;
                 padding-left: 35px;
-                transition: all .3s;
+                transition: background,padding-left .3s;
             }
         }
         .router-link-active  {
             background: $blue-100;
             color: $primary;
             border-right: 4px solid $primary;
+        }
+        .nav-category-wrapper{
+            transition: padding .3s;
+            .icon{
+                margin-right: 10px;
+                width: 27px;
+                height: auto;
+            }
+            .nav-category-container{
+                padding: 5px 30px;
+                cursor: pointer;
+                transition: padding .3s;
+                &:hover{
+                    padding-left: 35px;
+                    background: $blue-100;
+                    transition: background,padding-left .3s;
+                }
+            }
+            .nav-subcategories{
+                margin-left: 40px;
+                padding: 0px;
+                .nav-sub-item{
+                    transition: all .3s;
+                    .router-link-active  {
+                        background: $blue-100;
+                        padding: 0px 5px 0px 10px;
+                        color: $primary;
+                        border-right: 4px solid $primary;
+                    }
+                    &:hover{
+                        background: $blue-100;
+                        padding-left: 15px;
+                        transition: background,padding-left .3s;
+                    }
+                }
+            }
         }
     }
 }

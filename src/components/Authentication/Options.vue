@@ -45,7 +45,7 @@ name: "Options",
     display: flex;
     margin-bottom: 15px;
 .login-option{
-    border-bottom: 3px solid $grey-200;
+    border-bottom: 3px solid $grey-300;
     cursor: pointer;
     width: 100px;
     padding: 3px 0;
@@ -54,7 +54,7 @@ name: "Options",
     }*/
 }
 .register-option{
-    border-bottom: 3px solid $grey-200;
+    border-bottom: 3px solid $grey-300;
     cursor: pointer;
     padding: 3px 0;
     display: flex;

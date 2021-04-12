@@ -138,7 +138,7 @@ methods:{
         display: flex;
         margin-bottom: 15px;
         .login-option{
-            border-bottom: 3px solid $grey-200;
+            border-bottom: 3px solid $grey-300;
             cursor: pointer;
             width: 100px;
             padding: 3px 0;
@@ -147,7 +147,7 @@ methods:{
             }*/
         }
         .register-option{
-            border-bottom: 3px solid $grey-200;
+            border-bottom: 3px solid $grey-300;
             cursor: pointer;
             padding: 3px 0;
             display: flex;
@@ -174,7 +174,7 @@ methods:{
         .form-control{
             border: none;
             background: none;
-            border-bottom: 2px solid $grey-200;
+            border-bottom: 2px solid $grey-300;
             border-radius: 0;
         }
         .form-floating label{

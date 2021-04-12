@@ -316,7 +316,7 @@ export default {
         display: flex;
         margin-bottom: 15px;
         .login-option{
-            border-bottom: 3px solid $grey-200;
+            border-bottom: 3px solid $grey-300;
             cursor: pointer;
             width: 100px;
             padding: 3px 0;
@@ -325,7 +325,7 @@ export default {
             }*/
         }
         .register-option{
-            border-bottom: 3px solid $grey-200;
+            border-bottom: 3px solid $grey-300;
             cursor: pointer;
             padding: 3px 0;
             display: flex;
@@ -352,14 +352,14 @@ export default {
         .form-control{
             border: none;
             background: none;
-            border-bottom: 2px solid $grey-200;
+            border-bottom: 2px solid $grey-300;
             border-radius: 0;
         }
         .form-floating select{
             border: none;
             border-radius: 0;
             background: none;
-            border-bottom: 2px solid $grey-200;
+            border-bottom: 2px solid $grey-300;
         }
         .form-floating label{
             padding-left: 0;

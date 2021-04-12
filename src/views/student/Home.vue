@@ -34,7 +34,6 @@
                  </a>
              </router-link>
 
-            <!--             TODO: Dropdown options         -->
              <div class="nav-category-wrapper">
                   <div
                       class="nav-category-container"
@@ -105,7 +104,6 @@
                          </li>
                      </ul>
               </div>
-
 
              <div class="nav-category-wrapper">
                  <div
@@ -212,9 +210,10 @@
                  </ul>
              </div>
          </div>
+
      </div>
     <!--    Contents Rendered here      -->
-    <div class="container-fluid">
+    <div class="container-fluid main">
         <router-view></router-view>
     </div>
 </div>
@@ -260,7 +259,11 @@ ul{
 .nav-container{
     width: 300px;
     height: 100%;
+    z-index: 1;
     position: fixed;
+    background: white;
+    top: 0;
+    left: 0;
     a{
         text-decoration: none;
         color: $grey-400;
@@ -347,6 +350,13 @@ ul{
             }
         }
     }
+}
+
+.main{
+    background: $grey-200;
+    height: 100vh;
+    overflow: auto;
+    padding-left: 300px ;
 }
 
 </style>

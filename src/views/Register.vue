@@ -12,7 +12,7 @@
         </div>
 
         <!--        Background Image    -->
-        <div class="row">
+        <div class="row py-2">
             <div class="col-md-8 bg">
                 <img class="" src="../assets/images/register_bg.png" alt="">
             </div>
@@ -58,25 +58,37 @@
 
                             <!--            TODO: Populate selection forms          -->
                             <div class="row g-2">
-                                <div class="col-md">
+                                <!--<div class="col-md">
                                     <div class="form-floating">
-                                        <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
-                                            <option selected>Course</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                        <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example" v-model="formData.course">
+                                            <option selected>Class</option>
+                                            <option v-for="course in formData.courses" :value="course" v-bind:key="course">
+                                                {{ course }}
+                                            </option>
                                         </select>
                                     </div>
-                                </div>
-
+                                </div>-->
                                 <!--            TODO: Populate selection forms          -->
                                 <div class="col-md">
                                     <div class="form-floating">
-                                        <select class="form-select" id="class" aria-label="Floating label select example">
-                                            <option selected>Class</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                        <select class="form-select" id="class" aria-label="Floating label select example"
+                                                v-model="formData.course">
+                                            <option selected disabled>Class</option>
+                                            <option v-for="course in formData.courses" :value="course" v-bind:key="course">
+                                                {{ course }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--            TODO: Populate selection forms          -->
+                                <div class="col-md">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example"
+                                                v-model="formData.level">
+                                            <option selected disabled>Level</option>
+                                            <option v-for="level in formData.levels" :value="level" v-bind:key="level">
+                                                {{ level }}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -88,7 +100,6 @@
                                        @keyup="phoneNumber">
                                 <label for="phoneNumber">Phone Number</label>
                                 <span class="error" v-if="formData.errors.phoneNumber">{{ formData.errors.phoneNumber }}</span>
-
                             </div>
                             <div class="form-floating">
                                 <input type="password" class="form-control" id="password" placeholder="Password"
@@ -97,7 +108,6 @@
                                 <label for="password">Password</label>
                                 <span class="error" v-if="formData.errors.password">{{ formData.errors.password }}</span>
                                 <span class="pwd_success" v-if="formData.success.password">{{ formData.success.password }}</span>
-
                             </div>
                             <div class="form-floating">
                                 <input type="password" class="form-control" id="confirmPassword" placeholder="Password"
@@ -106,7 +116,6 @@
                                 <label for="confirmPassword">Confirm Password</label>
                                 <span class="error" v-if="formData.errors.confirmPassword">{{ formData.errors.confirmPassword }}</span>
                                 <span class="pwd_success" v-if="formData.success.confirmPassword">{{ formData.success.confirmPassword }}</span>
-
                             </div>
                         </form>
                     </div>
@@ -130,17 +139,16 @@ export default {
             formData:{
                 fullName:"",
                 registrationNumber:"",
-                course:"",
-                class:"",
+                course:"COMPUTER ENGINEERING",
+                level:"BENG-20",
                 phoneNumber:"",
                 password:"",
                 confirmPassword:"",
-                courses:{
-
-                },
-                levels:{
-
-                },
+                courses:["COMPUTER ENGINEERING",
+                    "IT","CIVIL ENGINEERING",
+                    "MINING ENGINEERING","MECHANICAL ENGINEERING",
+                    "ELECTRICAL ENGINEERING","BIO-MEDICAL ENGINEERING","FOOD SCIENCE","TELECOMMUNICATION ENGINEERING", "CST"],
+                levels:["BENG-20","BENG-19","BENG-18","GST-20","OD-18","OD-19","OD-20"],
                 errors:{
                     fullName:"",
                     registrationNumber:"",
@@ -282,6 +290,7 @@ export default {
 }
 .main{
     height: 100vh;
+    
 }
 .login-container{
     padding: 0 60px 0 20px;

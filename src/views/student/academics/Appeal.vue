@@ -123,10 +123,12 @@ name: "Appeal"
         border: 0;
         border-radius: 6px;
         background: $primary;
+        box-shadow: 0px 3px 6px rgba(0,0,0,.2);
     }
 }
 .table{
     width: 100%;
+    box-shadow: 0px 3px 20px rgba(0,0,0,.1);
     .table-heading{
         background: $primary;
         color: white;

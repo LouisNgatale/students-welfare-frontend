@@ -1,5 +1,66 @@
 <template>
-<div>Appeal</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <span class="path">ACADEMICS > </span>
+            <span class="sub-path">Appeal</span>
+        </div>
+    </div>
+
+    <div class="row ">
+        <div class="col ">
+            <div class="top-header my-2">
+                <span>Appeals</span>
+                <button class="add_appeal">
+                    <img src="../../../assets/icons/plus.svg" alt="">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <tr class="table-heading">
+                    <th>S/N</th>
+                    <th>Subject</th>
+                    <th>Appealed on</th>
+                    <th>Updated on</th>
+                    <th>Status</th>
+                    <th>Progress</th>
+                </tr>
+                <tr class="td">
+                    <td class="sn">1</td>
+                    <td>Kiswahili</td>
+                    <td>01/12/2020</td>
+                    <td>01/12/2020</td>
+                    <td>
+                        Appealed
+                        <span>
+                            <img src="../../../assets/icons/Done.svg" alt="">
+                        </span>
+                    </td>
+                    <td>1</td>
+                </tr>
+                <tr class="td">
+                    <td class="sn">2</td>
+                    <td>Civics</td>
+                    <td>01/12/2020</td>
+                    <td>Pending</td>
+                    <td class="justify-content-between">
+                        <span>
+                            Pending
+                        </span>
+                        <span>
+                            <img src="../../../assets/icons/Pending.svg" alt="">
+                        </span>
+                    </td>
+                    <td>1</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
@@ -8,6 +69,48 @@ name: "Appeal"
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.path{
+    font-weight: bold;
+    font-size: 18px;
+}
+.sub-path{
+    font-size: 16px;
+    color: $grey-300;
+}
+.top-header{
+    display: flex;
+    justify-content: space-between;
+    .add_appeal{
+        border: 0;
+        border-radius: 6px;
+        background: $primary;
+    }
+}
+.table{
+    width: 100%;
+    .table-heading{
+        background: $primary;
+        color: white;
+        th{
+            padding: 5px 5px;
+            font-weight: normal;
+        }
+    }
+    td{
+        padding: 5px 5px;
+        font-weight: normal;
+    }
+    .sn{
+        text-align: center;
+    }
 
+    tr{
+        background: $grey-100;
+    }
+    tr:nth-child(even) {background-color: white;}
+
+
+
+}
 </style>

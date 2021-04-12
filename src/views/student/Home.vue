@@ -1,18 +1,24 @@
 <template>
 <div>
     <!--    Navigation bar      -->
-     <div class="nav-container">
+     <div id="nav-container" class="nav-container">
         <!--         Navigation Header      -->
          <div class="nav-header">
-             <div class="nav-icon">
+             <div @click="toggleMenu" class="nav-icon">
                  <span>
                      <img class="" src="../../assets/images/logo.svg" alt="">
                  </span>
              </div>
              <div class="nav-brand">
-                 <p class="heading">DIT</p>
+                 <div class="heading">
+                     <p class="nav-heading">DIT</p>
+<!--                     <span class="menu-icon">-->
+<!--                        <img class="" src="../../assets/icons/menu.svg" alt="">-->
+<!--                     </span>-->
+                 </div>
                  <p class="sub-heading">Student Welfare System</p>
              </div>
+
          </div>
 
         <!--         Navigation Menu           -->
@@ -29,7 +35,7 @@
                           <img v-if="isActive" src="../../assets/icons/dashboard-active.svg" alt="">
                           <img v-else src="../../assets/icons/dashboard.svg" alt="">
                       </span>
-                         <span>Dashboard</span>
+                         <span class="menu-title">Dashboard</span>
                      </div>
                  </a>
              </router-link>
@@ -42,7 +48,7 @@
                           <img v-if="isActive" src="../../assets/icons/academics-active.svg" alt="">
                           <img v-else src="../../assets/icons/academics.svg" alt="">
                       </span>
-                      <span>Academics</span>
+                      <span class="menu-title">Academics</span>
                   </div>
 
                      <ul v-if="menu.academics.show" class="nav-subcategories">
@@ -113,7 +119,7 @@
                           <img v-if="isActive" src="../../assets/icons/hostel-active.svg" alt="">
                           <img v-else src="../../assets/icons/hostel.svg" alt="">
                       </span>
-                     <span>Hostel</span>
+                     <span  class="menu-title">Hostel</span>
 
                  </div>
 
@@ -147,7 +153,7 @@
                           <img v-if="isActive" src="../../assets/icons/welfare-active.svg" alt="">
                           <img v-else src="../../assets/icons/welfare.svg" alt="">
                       </span>
-                     <span>Student Welfare</span>
+                     <span  class="menu-title">Student Welfare</span>
                  </div>
 
                  <ul v-if="menu.welfare.show" class="nav-subcategories">
@@ -238,6 +244,10 @@ export default {
       }
     },
     methods:{
+        toggleMenu(){
+            // eslint-disable-next-line no-undef
+            $("#nav-container").css("width","90px")
+        },
         showAcademicsMenu(){
             this.menu.academics.show = !this.menu.academics.show;
         },
@@ -256,6 +266,40 @@ ul{
     list-style-type: none;
     margin-bottom: 0;
 }
+.nav-container-min{
+    width: 60px;
+    height: 100%;
+    z-index: 1;
+    position: fixed;
+    background: white;
+    top: 0;
+    left: 0;
+}
+.nav-container-min + .nav-heading{
+    display: none;
+}
+.nav-container-min .nav-menu{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.nav-container-min  .nav-brand{
+    justify-content: center;
+}
+.nav-container-min .nav-category-wrapper{
+    margin: auto;
+
+    &:hover{
+        background: $primary;
+    }
+}
+
+.nav-container-min + .main{
+    padding-left: 60px;
+}
+
+
 .nav-container{
     width: 300px;
     height: 100%;
@@ -281,9 +325,20 @@ ul{
         }
         .nav-brand{
             .heading{
-                color: $primary;
-                font-size: 28px;
-                font-weight: bold;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .menu-icon{
+                    float: right;
+                    padding: 5px;
+                    cursor: pointer;
+                }
+                .nav-heading{
+                    color: $primary;
+                    font-size: 28px;
+                    font-weight: bold;
+                    display: inline-block;
+                }
             }
             .sub-heading{
                 font-size: 16px;
@@ -356,7 +411,7 @@ ul{
     background: $grey-200;
     height: 100vh;
     overflow: auto;
-    padding-left: 300px ;
+    padding-left: 300px;
 }
 
 </style>

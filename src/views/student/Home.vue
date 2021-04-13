@@ -23,6 +23,7 @@
 
         <!--         Navigation Menu           -->
          <div class="nav-menu">
+
              <router-link
                  to="/student/home"
                  custom
@@ -215,6 +216,7 @@
                      </li>
                  </ul>
              </div>
+
          </div>
 
      </div>

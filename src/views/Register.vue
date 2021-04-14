@@ -29,6 +29,10 @@
                         Registration number is taken
                     </div>
 
+                    <div v-if="serverResponses.success.created" class="alert alert-success" role="alert">
+                        User created successfully
+                    </div>
+
                     <div class="options">
                         <div @click="loginForm" id="login-option" class="login-option">
                             <span>Login</span>
@@ -182,6 +186,9 @@ export default {
             serverResponses:{
                 errors:{
                     numberExists:false
+                },
+                success: {
+                    created:false
                 }
             }
         }
@@ -200,6 +207,8 @@ export default {
           })
           .then(response => {
               console.log(response)
+              this.serverResponses.success.created = true;
+              this.serverResponses.errors.numberExists = false
           })
           .catch(err =>{
               if (err.response) {

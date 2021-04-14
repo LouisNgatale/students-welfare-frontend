@@ -39,18 +39,20 @@
     <div class="form">
         <form action="">
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                       v-model="loginData.username">
                 <label for="floatingInput">Email address</label>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                       v-model="loginData.password">
                 <label for="floatingPassword">Password</label>
             </div>
         </form>
     </div>
 
     <div class="button">
-        <button class="btn btn-primary">Login</button>
+        <button @click="login" class="btn btn-primary">Login</button>
     </div>
 
   </div>
@@ -61,15 +63,31 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
 name: "Login",
-methods:{
     data(){
-      return{
-          formData:{
-
-          }
-      }
+        return{
+            loginData:{
+                username:"",
+                password:""
+            }
+        }
+    },
+methods:{
+    login:function (){
+        axios.post("http://localhost:8082/api/login/authenticate",{
+            "username":this.loginData.username,
+            "password":this.loginData.password,
+            "type":"student"
+        })
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(err =>{
+                console.log(err)
+            });
     },
     loginForm:function (){
         // eslint-disable-next-line no-undef

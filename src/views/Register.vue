@@ -11,8 +11,9 @@
                 experience!</p>
         </div>
 
-        <!--        Background Image    -->
+        <!--        Main body    -->
         <div class="row py-2">
+        <!--        Background Image    -->
             <div class="col-md-8 bg">
                 <img class="" src="../assets/images/register_bg.png" alt="">
             </div>
@@ -24,6 +25,9 @@
 
                     <div class="title"><p>Create Account!</p></div>
                     <div class=""><p>Student!</p></div>
+                    <div v-if="serverResponses.errors.numberExists" class="alert alert-danger" role="alert">
+                        Registration number is taken
+                    </div>
 
                     <div class="options">
                         <div @click="loginForm" id="login-option" class="login-option">
@@ -121,7 +125,7 @@
                     </div>
 
                     <div class="button">
-                        <button class="btn btn-primary">Login</button>
+                        <button @click="register" class="btn btn-primary">Login</button>
                     </div>
 
                 </div>
@@ -132,6 +136,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "Register",
     data(){
@@ -149,6 +155,8 @@ export default {
                     "MINING ENGINEERING","MECHANICAL ENGINEERING",
                     "ELECTRICAL ENGINEERING","BIO-MEDICAL ENGINEERING","FOOD SCIENCE","TELECOMMUNICATION ENGINEERING", "CST"],
                 levels:["BENG-20","BENG-19","BENG-18","GST-20","OD-18","OD-19","OD-20"],
+                gender:"Male",
+                year:"2020",
                 errors:{
                     fullName:"",
                     registrationNumber:"",
@@ -170,10 +178,45 @@ export default {
                 email: /^([a-z\d\\.-]+)@([a-z]{2,8})\.([a-z]{2,8})(\.[a-z]{2,8})?$/ig ,
                 password:/^[\d\w]{8,20}$/ig,
                 // fullName:/^([a-z]+)\s([a-z]+)$/ig,
+            },
+            serverResponses:{
+                errors:{
+                    numberExists:false
+                }
             }
         }
     },
     methods:{
+        register(){
+          axios.post("http://localhost:8081/api/registration/student",{
+              "fullName":this.formData.fullName,
+              "registrationNumber":this.formData.registrationNumber,
+              "phoneNumber":this.formData.phoneNumber,
+              "password":this.formData.password,
+              "level":this.formData.level,
+              "course":this.formData.course,
+              "yearOfStudy":this.formData.year,
+              "gender":this.formData.gender
+          })
+          .then(response => {
+              console.log(response)
+          })
+          .catch(err =>{
+              if (err.response) {
+                  // client received an error response (5xx, 4xx)
+                  console.log(err.response.data.message)
+                  if (err.response.data.message === "User already exists"){
+                      this.serverResponses.errors.numberExists = true
+                  }
+
+              } else if (err.request) {
+                  // client never received a response, or request never left
+                  console.log(err.request)
+              } else {
+                  // anything else
+              }
+          });
+        },
         fullName (){
             const value = this.formData.fullName;
             //Works :)

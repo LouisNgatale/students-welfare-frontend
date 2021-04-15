@@ -95,7 +95,6 @@
 </template>
 
 <script>
-// import axios from "axios";
 import User from '../models/user';
 
 export default {
@@ -135,17 +134,7 @@ name: "Login",
                     );
                 }
             });
-            /*axios.post("http://localhost:8082/api/login/authenticate",{
-                "username":this.loginData.username,
-                "password":this.loginData.password,
-                "type":"student"
-            })
-                .then(response => {
-                    console.log(response.data)
-                })
-                .catch(err =>{
-                    console.log(err)
-                });*/
+
         },
         loginForm:function (){
             // eslint-disable-next-line no-undef

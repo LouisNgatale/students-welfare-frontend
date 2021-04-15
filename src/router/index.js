@@ -10,6 +10,7 @@ import Advice from "@/views/student/welfare/Advice";
 import Suggestions from "@/views/student/welfare/Suggestions";
 import Rules from "@/views/student/welfare/Rules";
 import Dashboard from "@/views/student/dashboard/Dashboard";
+import { Role } from "@/constants/role";
 
 Vue.use(VueRouter)
 
@@ -25,38 +26,47 @@ const routes = [
     component: Register
   },
   {
-    path: '/student',
+    path: '/student/',
+    meta: { authorize: [Role.Student] },
     children:[
       {
-        path:'home',
+        path:'',
+        meta: { authorize: [Role.Student] },
         component:Dashboard
       },
       {
         path:'academics/appeal',
+        meta: { authorize: [Role.Student] },
         component: Appeal
       },
       {
         path:'academics/postpone',
+        meta: { authorize: [Role.Student] },
         component: Postpone
       },
       {
         path:'academics/specials',
+        meta: { authorize: [Role.Student] },
         component: Specials
       },
       {
         path:'hostel/request',
+        meta: { authorize: [Role.Student] },
         component: Request
       },
       {
         path:'welfare/advice',
+        meta: { authorize: [Role.Student] },
         component: Advice
       },
       {
         path: 'welfare/suggestions',
+        meta: { authorize: [Role.Student] },
         component: Suggestions
       },
       {
         path:'welfare/rules',
+        meta: { authorize: [Role.Student] },
         component: Rules
       }
     ],
@@ -71,4 +81,31 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+
+  // const publicPages = ['/login', '/register'];
+  // const authRequired = !publicPages.includes(to.path);
+  let roles = localStorage.getItem('roles');
+
+  roles = JSON.parse(roles);
+  const loggedIn = localStorage.getItem('user');
+
+  const { authorize } = to.meta;
+  const currentUser = loggedIn;
+
+  if (authorize) {
+    if (!currentUser) {
+      // not logged in so redirect to login page with the return url
+      return next({ path: '/login', query: { returnUrl: to.path } });
+    }
+
+    // check if route is restricted by role
+    if (authorize.length && !roles.includes(authorize[0])) {
+      // role not authorised so redirect to home page
+      return next({ path: '/' });
+    }
+  }
+
+  next();
+});
 export default router

@@ -25,13 +25,13 @@
          <div class="nav-menu">
 
              <router-link
-                 to="/student/home"
+                 to="/student"
                  custom
-                 v-slot="{ href, route, isActive, navigate, }">
+                 v-slot="{ href, route, isActive, navigate, }" exact>
                  <a :href="href" @click="navigate">
                      <div
-                         :class="[isActive && 'router-link-active']"
-                         class="nav-item">
+                         :class="[isActive && 'router-link-exact-active']"
+                         class="nav-item" exact>
                       <span class="icon">
                           <img v-if="isActive" src="../../assets/icons/dashboard-active.svg" alt="">
                           <img v-else src="../../assets/icons/dashboard.svg" alt="">
@@ -56,12 +56,12 @@
                          <li class="nav-sub-item">
                              <!--Sub categories-->
                              <router-link
-                                 to="/student/academics/appeal"
+                                 to="/student/academics/appeal" exact
                                  custom
-                                 v-slot="{ href, route, isActive, navigate, }">
-                                 <a :href="href" @click="navigate">
+                                 v-slot="{ href, route, isActive, navigate, }" >
+                                 <a :href="href" @click="navigate" >
                                      <div
-                                          :class="[isActive && 'router-link-active']">
+                                          :class="[isActive && 'router-link-exact-active']"  >
                                          <span class="icon">
                                               <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
                                               <img v-else src="../../assets/icons/subcategory.svg" alt="">
@@ -77,10 +77,10 @@
                              <router-link
                                  to="/student/academics/postpone"
                                  custom
-                                 v-slot="{ href, route, isActive, navigate, }">
+                                 v-slot="{ href, route, isActive, navigate, }" exact>
                                  <a :href="href" @click="navigate">
                                      <div
-                                         :class="[isActive && 'router-link-active']">
+                                         :class="[isActive && 'router-link-exact-active']">
                                          <span class="icon">
                                               <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
                                               <img v-else src="../../assets/icons/subcategory.svg" alt="">
@@ -96,10 +96,10 @@
                              <router-link
                                  to="/student/academics/specials"
                                  custom
-                                 v-slot="{ href, route, isActive, navigate, }">
+                                 v-slot="{ href, route, isActive, navigate, }" exact>
                                  <a :href="href" @click="navigate">
                                      <div
-                                         :class="[isActive && 'router-link-active']">
+                                         :class="[isActive && 'router-link-exact-active']">
                                          <span class="icon">
                                               <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
                                               <img v-else src="../../assets/icons/subcategory.svg" alt="">
@@ -130,10 +130,10 @@
                          <router-link
                              to="/student/hostel/request"
                              custom
-                             v-slot="{ href, route, isActive, navigate, }">
+                             v-slot="{ href, route, isActive, navigate, }" exact>
                              <a :href="href" @click="navigate">
                                  <div
-                                     :class="[isActive && 'router-link-active']">
+                                     :class="[isActive && 'router-link-exact-active']">
                                          <span class="icon">
                                               <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
                                               <img v-else src="../../assets/icons/subcategory.svg" alt="">
@@ -151,7 +151,7 @@
                      class="nav-category-container"
                      @click="showWelfareMenu">
                       <span class="icon">
-                          <img v-if="isActive" src="../../assets/icons/welfare-active.svg" alt="">
+                          <img v-if="isActive" src="../../assets/icons/welfare-active.svg" alt="" exact>
                           <img v-else src="../../assets/icons/welfare.svg" alt="">
                       </span>
                      <span  class="menu-title">Student Welfare</span>
@@ -163,10 +163,10 @@
                          <router-link
                              to="/student/welfare/advice"
                              custom
-                             v-slot="{ href, route, isActive, navigate, }">
+                             v-slot="{ href, route, isActive, navigate, }" exact>
                              <a :href="href" @click="navigate">
                                  <div
-                                     :class="[isActive && 'router-link-active']">
+                                     :class="[isActive && 'router-link-exact-active']">
                                          <span class="icon">
                                               <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
                                               <img v-else src="../../assets/icons/subcategory.svg" alt="">
@@ -185,7 +185,7 @@
                              v-slot="{ href, route, isActive, navigate, }">
                              <a :href="href" @click="navigate">
                                  <div
-                                     :class="[isActive && 'router-link-active']">
+                                     :class="[isActive && 'router-link-exact-active']" exact>
                                          <span class="icon">
                                               <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
                                               <img v-else src="../../assets/icons/subcategory.svg" alt="">
@@ -201,10 +201,10 @@
                          <router-link
                              to="/student/welfare/rules"
                              custom
-                             v-slot="{ href, route, isActive, navigate, }">
+                             v-slot="{ href, route, isActive, navigate, }" exact>
                              <a :href="href" @click="navigate">
                                  <div
-                                     :class="[isActive && 'router-link-active']">
+                                     :class="[isActive && 'router-link-exact-active']">
                                          <span class="icon">
                                               <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
                                               <img v-else src="../../assets/icons/subcategory.svg" alt="">
@@ -232,6 +232,8 @@ export default {
   name: "Home",
     data(){
       return{
+          isActive: false,
+
           menu:{
               academics:{
                   show:false
@@ -258,6 +260,16 @@ export default {
         },
         showWelfareMenu(){
             this.menu.welfare.show = !this.menu.welfare.show;
+        }
+    },
+    computed: {
+        currentUser() {
+            return this.$store.state.auth.user;
+        }
+    },
+    mounted() {
+        if (!this.currentUser) {
+            this.$router.push('/login');
         }
     }
 }
@@ -365,7 +377,7 @@ ul{
                 transition: background,padding-left .3s;
             }
         }
-        .router-link-active  {
+        .router-link-exact-active  {
             background: $blue-100;
             color: $primary;
             border-right: 4px solid $primary;
@@ -392,7 +404,7 @@ ul{
                 padding: 0px;
                 .nav-sub-item{
                     transition: all .3s;
-                    .router-link-active  {
+                    .router-link-exact-active  {
                         background: $blue-100;
                         padding: 0px 5px 0px 10px;
                         color: $primary;

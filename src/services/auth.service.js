@@ -11,10 +11,16 @@ class AuthService {
                 password: user.password
             })
             .then(response => {
-                if (response.data.accessToken) {
-                    localStorage.setItem('user', JSON.stringify(response.data));
+                if (response.data.data) {
+                    //STORE AUTHENTICATION TOKEN IN LOCAL WEB STORAGE
+                    localStorage.setItem('user', JSON.stringify(response.data.jwt));
                 }
-
+                localStorage.setItem('user', JSON.stringify(response.data.jwt));
+                let roles = []
+                response.data.roles.forEach((item) => {
+                    roles.push(item.authority)
+                })
+                localStorage.setItem('roles', JSON.stringify(roles));
                 return response.data;
             });
     }

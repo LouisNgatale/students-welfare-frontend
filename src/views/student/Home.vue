@@ -232,7 +232,9 @@
      </div>
     <!--    Contents Rendered here      -->
     <div class="container-fluid main">
-        <router-view></router-view>
+        <transition>
+            <router-view></router-view>
+        </transition>
     </div>
 </div>
 </template>

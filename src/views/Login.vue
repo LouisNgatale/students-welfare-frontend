@@ -20,7 +20,9 @@
 <div class="col-md-4 login-container">
   <div class="login-contents">
 
-    <div class="title"><p>Welcome Back!</p></div>
+    <div class="title"><p>Welcome Back!</p>
+
+    </div>
 
     <div class="options">
         <div @click="loginForm" id="login-option" class="login-option active">
@@ -37,23 +39,53 @@
     </div>
 
     <div class="form">
-        <form action="">
+        <form name="form" @submit.prevent="handleLogin">
+
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
-                       v-model="loginData.username">
-                <label for="floatingInput">Email address</label>
+                <input
+                    id="floatingInput"
+                    v-model="user.username"
+                    v-validate="'required'"
+                    class="form-control"
+                    name="username"
+                    placeholder="Login Id"
+                    type="text"
+                />
+                <label for="floatingInput">Login Id</label>
+                <div
+                    v-if="errors.has('username')"
+                    class="alert alert-danger"
+                    role="alert"
+                >Username is required!</div>
             </div>
+
+
             <div class="form-floating">
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-                       v-model="loginData.password">
+                       v-model="user.password"
+                       v-validate="'required'"
+                       name="password">
                 <label for="floatingPassword">Password</label>
+            </div>
+            <div
+                v-if="errors.has('password')"
+                class="alert alert-danger"
+                role="alert"
+            >Password is required!</div>
+
+            <div class="form-group mt-2">
+                <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
+            </div>
+
+            <div class="button">
+                <button :disabled="loading" class="btn btn-primary">
+                    <span v-show="loading" class="spinner-border spinner-border-sm mr-2"></span>
+                    <span>Login</span>
+                </button>
             </div>
         </form>
     </div>
 
-    <div class="button">
-        <button @click="login" class="btn btn-primary">Login</button>
-    </div>
 
   </div>
 </div>
@@ -63,48 +95,84 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
+import User from '../models/user';
 
 export default {
 name: "Login",
     data(){
         return{
+            user: new User('', ''),
             loginData:{
                 username:"",
                 password:""
-            }
+            },
+            loading: false,
+            message: ''
         }
     },
-methods:{
-    login:function (){
-        axios.post("http://localhost:8082/api/login/authenticate",{
-            "username":this.loginData.username,
-            "password":this.loginData.password,
-            "type":"student"
-        })
-            .then(response => {
-                console.log(response.data)
-            })
-            .catch(err =>{
-                console.log(err)
+    methods:{
+        handleLogin:function (){
+            this.loading = true;
+            this.$validator.validateAll().then(isValid => {
+                if (!isValid) {
+                    this.loading = false;
+                    return;
+                }
+
+                if (this.user.username && this.user.password) {
+                    this.$store.dispatch('auth/login', this.user).then(
+                        () => {
+                            this.$router.push('/student');
+                        },
+                        error => {
+                            this.loading = false;
+                            this.message =
+                                (error.response && error.response.data) ||
+                                error.message ||
+                                error.toString();
+                        }
+                    );
+                }
             });
-    },
-    loginForm:function (){
-        // eslint-disable-next-line no-undef
-      $("#login-option").addClass("active");
+            /*axios.post("http://localhost:8082/api/login/authenticate",{
+                "username":this.loginData.username,
+                "password":this.loginData.password,
+                "type":"student"
+            })
+                .then(response => {
+                    console.log(response.data)
+                })
+                .catch(err =>{
+                    console.log(err)
+                });*/
+        },
+        loginForm:function (){
+            // eslint-disable-next-line no-undef
+          $("#login-option").addClass("active");
 
-        // eslint-disable-next-line no-undef
-      $("#register-option").removeClass("active");
-    },
-    registerForm:function (){
-        // eslint-disable-next-line no-undef
-      $("#register-option").addClass("active");
-        this.$router.push('/register')
+            // eslint-disable-next-line no-undef
+          $("#register-option").removeClass("active");
+        },
+        registerForm:function (){
+            // eslint-disable-next-line no-undef
+          $("#register-option").addClass("active");
+            this.$router.push('/register')
 
-        // eslint-disable-next-line no-undef
-      $("#login-option").removeClass("active");
-    }
-}
+            // eslint-disable-next-line no-undef
+          $("#login-option").removeClass("active");
+        }
+    },
+    computed: {
+        loggedIn() {
+            return this.$store.state.auth.status.loggedIn;
+        }
+    },
+    created() {
+        if (this.loggedIn) {
+            this.$router.push('/student');
+        }
+    },
 }
 </script>
 

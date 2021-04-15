@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="form">
-                        <form action="">
+                        <form name="form" >
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="fullName" autocomplete="off" placeholder="name@example.com"
                                        v-model="formData.fullName"
@@ -126,6 +126,11 @@
                                 <span class="pwd_success" v-if="formData.success.confirmPassword">{{ formData.success.confirmPassword }}</span>
                             </div>
                         </form>
+                        <div
+                            v-if="message"
+                            class="alert"
+                            :class="successful ? 'alert-success' : 'alert-danger'"
+                        >{{message}}</div>
                     </div>
 
                     <div class="button">
@@ -140,12 +145,16 @@
 </template>
 
 <script>
-import axios from "axios";
+import User from '../models/user';
 
 export default {
     name: "Register",
     data(){
         return{
+            user: new User('', '', '','','','','',''),
+            submitted: false,
+            successful: false,
+            message: '',
             formData:{
                 fullName:"",
                 registrationNumber:"",
@@ -195,36 +204,29 @@ export default {
     },
     methods:{
         register(){
-          axios.post("http://localhost:8081/api/registration/student",{
-              "fullName":this.formData.fullName,
-              "registrationNumber":this.formData.registrationNumber,
-              "phoneNumber":this.formData.phoneNumber,
-              "password":this.formData.password,
-              "level":this.formData.level,
-              "course":this.formData.course,
-              "yearOfStudy":this.formData.year,
-              "gender":this.formData.gender
-          })
-          .then(response => {
-              console.log(response)
-              this.serverResponses.success.created = true;
-              this.serverResponses.errors.numberExists = false
-          })
-          .catch(err =>{
-              if (err.response) {
-                  // client received an error response (5xx, 4xx)
-                  console.log(err.response.data.message)
-                  if (err.response.data.message === "User already exists"){
-                      this.serverResponses.errors.numberExists = true
-                  }
+            this.user.fullName = this.formData.fullName;
+            this.user.username = this.formData.registrationNumber;
+            this.user.phoneNumber = this.formData.phoneNumber;
+            this.user.level = this.formData.level;
+            this.user.course = this.formData.course;
+            this.user.yearOfStudy = this.formData.yearOfStudy;
+            this.user.gender = this.formData.gender;
 
-              } else if (err.request) {
-                  // client never received a response, or request never left
-                  console.log(err.request)
-              } else {
-                  // anything else
-              }
-          });
+                    this.$store.dispatch('auth/register', this.user).then(
+                        // eslint-disable-next-line no-unused-vars
+                        data => {
+                            this.message = "User registered!";
+                            this.successful = true;
+                        },
+                        error => {
+                            this.message =
+                                error.response.data.message ||
+                                "Failed to register";
+                            this.successful = false;
+                            console.log(this.message)
+                        }
+                    );
+
         },
         fullName (){
             const value = this.formData.fullName;
@@ -311,7 +313,17 @@ export default {
             // eslint-disable-next-line no-undef
             $("#login-option").removeClass("active");
         }
-    }
+    },
+    computed: {
+        loggedIn() {
+            return this.$store.state.auth.status.loggedIn;
+        }
+    },
+    mounted() {
+        if (this.loggedIn) {
+            this.$router.push('/student');
+        }
+    },
 }
 </script>
 

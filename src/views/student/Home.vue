@@ -217,6 +217,16 @@
                  </ul>
              </div>
 
+             <div
+                 class="nav-item logout" exact
+                 @click="logout">
+              <span class="icon">
+                  <img  src="../../assets/icons/logout.svg" alt="">
+              </span>
+                 <span class="menu-title">Logout</span>
+             </div>
+
+
          </div>
 
      </div>
@@ -251,6 +261,11 @@ export default {
         toggleMenu(){
             // eslint-disable-next-line no-undef
             $("#nav-container").css("width","90px")
+        },
+        logout(){
+          this.$store.dispatch('auth/logout').then(()=>{
+              this.$router.push('/login');
+          })
         },
         showAcademicsMenu(){
             this.menu.academics.show = !this.menu.academics.show;
@@ -363,6 +378,9 @@ ul{
         }
     }
     .nav-menu{
+        .logout{
+            cursor: pointer;
+        }
         .nav-item{
             padding: 5px 30px;
             transition: padding .3s;
@@ -371,6 +389,7 @@ ul{
                 width: 27px;
                 height: auto;
             }
+
             &:hover{
                 background: $blue-100;
                 padding-left: 35px;

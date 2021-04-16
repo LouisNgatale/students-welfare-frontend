@@ -110,8 +110,8 @@
                         <th>ACTION</th>
                     </tr>
 
-                    <tr v-for="result in results" v-bind:key="result.roomId" class="td">
-                        <td class="sn">1</td>
+                    <tr v-for="(result,index) in results" v-bind:key="result.roomId" class="td">
+                        <td class="sn">{{ index + 1 }}</td>
                         <td>{{ result.hostel }}</td>
                         <td>{{ result.wing }}</td>
                         <td>{{ result.floor }}</td>
@@ -143,6 +143,7 @@ name: "Request",
             wings:["WING A", "WING B"],
             floors:[],
             results:[],
+            sn:1,
             disabled:{
                 hostel:false,
                 wing:true,

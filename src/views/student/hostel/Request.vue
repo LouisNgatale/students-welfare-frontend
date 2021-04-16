@@ -213,6 +213,7 @@ name: "Request",
                         console.log(errorMessage)
                     })
             }
+
             //Search specific hostel
             if (this.hostel=== "" && this.wing === "" && this.floor === "" && this.room === ""){
                 axios.get("http://localhost:8084/api/hostel/all")

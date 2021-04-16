@@ -159,7 +159,7 @@ name: "Request",
     methods:{
         search(){
             //Search specific room
-            if (this.wing !== "" && this.hostel!== "" && this.floor !== "" && this.room !== ""){
+            if (this.hostel!== "" && this.wing !== "" && this.floor !== "" && this.room !== ""){
                 axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/"+this.wing+"/"+this.floor+"/"+this.room)
                     .then(response => {
                     console.log(response.data)
@@ -171,10 +171,38 @@ name: "Request",
             }
 
             //Search specific floor
-
+            if (this.hostel!== "" && this.wing !== "" && this.floor !== "" && this.room === ""){
+                axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/"+this.wing+"/"+this.floor+"/all")
+                    .then(response => {
+                        console.log(response.data)
+                        this.results.push(response.data);
+                    })
+                    .catch(errorMessage => {
+                        console.log(errorMessage)
+                    })
+            }
             //Search specific wing
-
+            if (this.hostel!== "" && this.wing !== "" && this.floor === "" && this.room === ""){
+                axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/"+this.wing+"/all")
+                    .then(response => {
+                        console.log(response.data)
+                        this.results.push(response.data);
+                    })
+                    .catch(errorMessage => {
+                        console.log(errorMessage)
+                    })
+            }
             //Search specific hostel
+            if (this.hostel!== "" && this.wing === "" && this.floor === "" && this.room === ""){
+                axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/all")
+                    .then(response => {
+                        console.log(response.data)
+                        this.results.push(response.data);
+                    })
+                    .catch(errorMessage => {
+                        console.log(errorMessage)
+                    })
+            }
         }
     },
     watch: {

@@ -204,7 +204,10 @@ name: "Request",
                 axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/all")
                     .then(response => {
                         this.results = []
-                        this.results.push(response.data);
+                        console.log(response.data)
+                        response.data.hostelResponses.forEach(item =>{
+                            this.results.push(item);
+                        })
                     })
                     .catch(errorMessage => {
                         console.log(errorMessage)
@@ -215,7 +218,10 @@ name: "Request",
                 axios.get("http://localhost:8084/api/hostel/all")
                     .then(response => {
                         this.results = []
-                        this.results.push(response.data);
+                        console.log(response.data)
+                        response.data.hostelResponses.forEach(item =>{
+                            this.results.push(item);
+                        })
                     })
                     .catch(errorMessage => {
                         console.log(errorMessage)

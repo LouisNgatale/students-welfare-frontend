@@ -4,6 +4,7 @@ import router from './router'
 import store from './store';
 import 'bootstrap';
 import VeeValidate from 'vee-validate';
+import './axios'
 import 'bootstrap/dist/css/bootstrap.min.css';
 Vue.config.productionTip = false;
 

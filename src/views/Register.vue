@@ -213,9 +213,8 @@ export default {
             this.user.gender = this.formData.gender;
 
                     this.$store.dispatch('auth/register', this.user).then(
-                        // eslint-disable-next-line no-unused-vars
                         data => {
-                            this.message = "User registered!";
+                            this.message = data.data.message ?? "User registered!";
                             this.successful = true;
                         },
                         error => {

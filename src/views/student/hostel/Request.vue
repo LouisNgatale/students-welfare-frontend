@@ -24,6 +24,7 @@
             <div class="col">
                 <div class="search-card">
 
+
                     <div class="row">
                         <div class="col mx-4 my-3">
                           <span>
@@ -36,35 +37,39 @@
                     <div class="container-fluid">
                         <div class="row justify-content-between">
                             <div class="col  mb-4">
-                                <select name="" id="hostel">
-                                    <option value="" selected>SELECT HOSTEL</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
+                                <select name="" id="hostel"
+                                        :disabled="disabled.hostel"
+                                        v-model="hostel">
+                                    <option value="" selected disabled>SELECT HOSTEL</option>
+                                    <option v-for="hostel in hostels" :value="hostel" v-bind:key="hostel"  >{{ hostel }}</option>
+
                                 </select>
                             </div>
                             <div class="col ">
-                                <select name="" id="wing">
-                                    <option value="" selected>SELECT WING</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
+                                <select name="" id="wing"
+                                        :disabled="disabled.wing"
+                                        v-model="wing">
+                                    <option value="" disabled selected>SELECT WING</option>
+                                    <option v-for="wing in wings" :value="wing" v-bind:key="wing">{{ wing }}</option>
+
                                 </select>
                             </div>
                             <div class="col ">
-                                <select name="" id="floor">
-                                    <option value="" selected>SELECT FLOOR</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
+                                <select name="" id="floor"
+                                        :disabled="disabled.floor"
+                                        v-model="floor">
+                                    <option value="" disabled selected>SELECT FLOOR</option>
+                                    <option v-for="floor in floors" :value="floor" v-bind:key="floor">{{ floor }}</option>
+
                                 </select>
                             </div>
                             <div class="col ">
-                                <select name="" id="room">
-                                    <option value="" selected>SELECT ROOM</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
+                                <select name="" id="room"
+                                        :disabled="disabled.room"
+                                        v-model="room">
+                                    <option value="" disabled selected>SELECT ROOM</option>
+                                    <option v-for="room in rooms" :value="room" v-bind:key="room">{{ room }}</option>
+
                                 </select>
                             </div>
                         </div>
@@ -128,8 +133,50 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-name: "Request"
+name: "Request",
+    data(){
+        return{
+            hostels:["BLOCK 1", "BLOCK 2", "BLOCK 3", "BLOCK 4", "BLOCK 5"],
+            wings:["WING A", "WING B"],
+            floors:[],
+            disabled:{
+                hostel:false,
+                wing:true,
+                floor:true,
+                room:true
+            },
+            rooms:"",
+            hostel:"",
+            wing:"",
+            floor: "",
+            room: ""
+    }
+    },
+    watch: {
+        // whenever question changes, this function will run
+        hostel() {
+            this.disabled.wing = false
+        },
+        wing(){
+            //Query for floor number from database
+            if (this.wing !== "" && this.hostel!== ""){
+                axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/"+this.wing).then(response => {
+                    this.floors = response.data.floors
+                }).catch(errorMessage => {
+                    console.log(errorMessage)
+                })
+            }
+
+            this.disabled.floor =false
+        },
+        floor(){
+            this.disabled.room =false
+        }
+
+    }
 }
 </script>
 

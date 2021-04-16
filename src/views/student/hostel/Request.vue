@@ -119,7 +119,7 @@
                         <td>{{  result.availability }}</td>
                         <td>{{ result.condition }}</td>
                         <td>
-                        <span class="request-room">
+                        <span :id="result.roomId" class="request-room">
                             <img class="" src="../../../assets/icons/request_room.svg" alt="">
                         </span>
                         </td>
@@ -190,7 +190,10 @@ name: "Request",
                 axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/"+this.wing+"/all")
                     .then(response => {
                         this.results = []
-                        this.results.push(response.data);
+                        console.log(response.data)
+                        response.data.hostelResponses.forEach(item =>{
+                            this.results.push(item);
+                        })
                     })
                     .catch(errorMessage => {
                         console.log(errorMessage)

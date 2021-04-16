@@ -119,7 +119,7 @@
                         <td>{{  result.availability }}</td>
                         <td>{{ result.condition }}</td>
                         <td>
-                        <span :id="result.roomId" class="request-room">
+                        <span @click="request(result)" :id="result.roomId" class="request-room">
                             <img class="" src="../../../assets/icons/request_room.svg" alt="">
                         </span>
                         </td>
@@ -129,6 +129,7 @@
             </div>
         </div>
     </div>
+
 </div>
 </template>
 
@@ -158,6 +159,17 @@ name: "Request",
     }
     },
     methods:{
+        request(id){
+            axios.post("http://localhost:8084/api/hostel/apply",{
+                "roomId":id.roomId
+            }).then(response => {
+                // eslint-disable-next-line no-undef
+                $('#myModal').modal('show')
+                console.log(response.data)
+            }).catch(errorMessage => {
+                console.log(errorMessage)
+            });
+        },
         search(){
             //Search specific room
             if (this.hostel!== "" && this.wing !== "" && this.floor !== "" && this.room !== ""){
@@ -314,6 +326,7 @@ select{
     .request-room{
         border: 0;
         border-radius: 6px;
+        cursor: pointer;
         img{
             height: 25px;
             width: 25px;

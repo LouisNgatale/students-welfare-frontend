@@ -200,7 +200,7 @@ name: "Request",
                     })
             }
             //Search specific hostel
-            if (this.hostel!== "" && this.wing === "" && this.floor === "" && this.room === ""){
+            if (this.hostel !== "" && this.wing === "" && this.floor === "" && this.room === ""){
                 axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/all")
                     .then(response => {
                         this.results = []
@@ -293,8 +293,6 @@ select{
     border: 2px solid $grey-300;
     outline: none;
 }
-
-
 .table{
     width: 100%;
     box-shadow: 0px 3px 20px rgba(0,0,0,.1);

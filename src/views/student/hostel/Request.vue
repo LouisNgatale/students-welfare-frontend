@@ -67,7 +67,7 @@
                                 <select name="" id="room"
                                         :disabled="disabled.room"
                                         v-model="room">
-                                    <option value="" disabled selected>SELECT ROOM</option>
+                                    <option value=""  selected>SELECT ROOM</option>
                                     <option v-for="room in rooms" :value="room" v-bind:key="room">{{ room }}</option>
 
                                 </select>
@@ -175,7 +175,10 @@ name: "Request",
                 axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/"+this.wing+"/"+this.floor+"/all")
                     .then(response => {
                         this.results = []
-                        this.results.push(response.data);
+                        console.log(response.data)
+                        response.data.hostelResponses.forEach(item =>{
+                            this.results.push(item);
+                        })
                     })
                     .catch(errorMessage => {
                         console.log(errorMessage)

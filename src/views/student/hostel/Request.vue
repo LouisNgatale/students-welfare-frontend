@@ -78,7 +78,7 @@
                     <div class="container-fluid">
                         <div class="row  justify-content-end">
                             <div class="col mb-4 mx-5">
-                                <button class="btn btn-primary ">Search</button>
+                                <button @click="search" class="btn btn-primary ">Search</button>
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div v-if="results.length" class="container-fluid">
         <div class="row">
             <div class="col">
                 <table class="table">
@@ -110,14 +110,14 @@
                         <th>ACTION</th>
                     </tr>
 
-                    <tr class="td">
+                    <tr v-for="result in results" v-bind:key="result.roomId" class="td">
                         <td class="sn">1</td>
-                        <td>BLOCK 5</td>
-                        <td>A</td>
-                        <td>3</td>
-                        <td>209</td>
-                        <td>AVAILABLE</td>
-                        <td>GOOD</td>
+                        <td>{{ result.hostel }}</td>
+                        <td>{{ result.wing }}</td>
+                        <td>{{ result.floor }}</td>
+                        <td>{{ result.room }}</td>
+                        <td>{{  result.availability }}</td>
+                        <td>{{ result.condition }}</td>
                         <td>
                         <span class="request-room">
                             <img class="" src="../../../assets/icons/request_room.svg" alt="">
@@ -142,6 +142,7 @@ name: "Request",
             hostels:["BLOCK 1", "BLOCK 2", "BLOCK 3", "BLOCK 4", "BLOCK 5"],
             wings:["WING A", "WING B"],
             floors:[],
+            results:[],
             disabled:{
                 hostel:false,
                 wing:true,
@@ -154,6 +155,27 @@ name: "Request",
             floor: "",
             room: ""
     }
+    },
+    methods:{
+        search(){
+            //Search specific room
+            if (this.wing !== "" && this.hostel!== "" && this.floor !== "" && this.room !== ""){
+                axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/"+this.wing+"/"+this.floor+"/"+this.room)
+                    .then(response => {
+                    console.log(response.data)
+                        this.results.push(response.data);
+                    })
+                    .catch(errorMessage => {
+                        console.log(errorMessage)
+                    })
+            }
+
+            //Search specific floor
+
+            //Search specific wing
+
+            //Search specific hostel
+        }
     },
     watch: {
         // whenever question changes, this function will run
@@ -173,6 +195,14 @@ name: "Request",
             this.disabled.floor =false
         },
         floor(){
+            if (this.wing !== "" && this.hostel!== "" && this.floor !== ""){
+                axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/"+this.wing+"/"+this.floor).then(response => {
+                    console.log(response.data)
+                    this.rooms = response.data.rooms
+                }).catch(errorMessage => {
+                    console.log(errorMessage)
+                })
+            }
             this.disabled.room =false
         }
 

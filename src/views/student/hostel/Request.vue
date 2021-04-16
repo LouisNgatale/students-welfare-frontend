@@ -162,7 +162,7 @@ name: "Request",
             if (this.hostel!== "" && this.wing !== "" && this.floor !== "" && this.room !== ""){
                 axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/"+this.wing+"/"+this.floor+"/"+this.room)
                     .then(response => {
-                    console.log(response.data)
+                        this.results = []
                         this.results.push(response.data);
                     })
                     .catch(errorMessage => {
@@ -174,7 +174,7 @@ name: "Request",
             if (this.hostel!== "" && this.wing !== "" && this.floor !== "" && this.room === ""){
                 axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/"+this.wing+"/"+this.floor+"/all")
                     .then(response => {
-                        console.log(response.data)
+                        this.results = []
                         this.results.push(response.data);
                     })
                     .catch(errorMessage => {
@@ -185,7 +185,7 @@ name: "Request",
             if (this.hostel!== "" && this.wing !== "" && this.floor === "" && this.room === ""){
                 axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/"+this.wing+"/all")
                     .then(response => {
-                        console.log(response.data)
+                        this.results = []
                         this.results.push(response.data);
                     })
                     .catch(errorMessage => {
@@ -196,7 +196,18 @@ name: "Request",
             if (this.hostel!== "" && this.wing === "" && this.floor === "" && this.room === ""){
                 axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/all")
                     .then(response => {
-                        console.log(response.data)
+                        this.results = []
+                        this.results.push(response.data);
+                    })
+                    .catch(errorMessage => {
+                        console.log(errorMessage)
+                    })
+            }
+            //Search specific hostel
+            if (this.hostel=== "" && this.wing === "" && this.floor === "" && this.room === ""){
+                axios.get("http://localhost:8084/api/hostel/all")
+                    .then(response => {
+                        this.results = []
                         this.results.push(response.data);
                     })
                     .catch(errorMessage => {

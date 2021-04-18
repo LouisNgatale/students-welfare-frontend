@@ -134,7 +134,7 @@
                     </div>
 
                     <div class="button">
-                        <button @click="register" class="btn btn-primary">Login</button>
+                        <button @click="register" class="btn btn-primary">Register</button>
                     </div>
 
                 </div>
@@ -206,6 +206,7 @@ export default {
         register(){
             this.user.fullName = this.formData.fullName;
             this.user.username = this.formData.registrationNumber;
+            this.user.password = this.formData.password;
             this.user.phoneNumber = this.formData.phoneNumber;
             this.user.level = this.formData.level;
             this.user.course = this.formData.course;
@@ -222,7 +223,6 @@ export default {
                                 error.response.data.message ||
                                 "Failed to register";
                             this.successful = false;
-                            console.log(this.message)
                         }
                     );
 

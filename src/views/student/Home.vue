@@ -143,6 +143,24 @@
                              </a>
                          </router-link>
                      </li>
+                     <li class="nav-sub-item">
+                         <!--Sub categories-->
+                         <router-link
+                             to="/student/hostel/applications"
+                             custom
+                             v-slot="{ href, route, isActive, navigate, }" exact>
+                             <a :href="href" @click="navigate">
+                                 <div
+                                     :class="[isActive && 'router-link-exact-active']">
+                                         <span class="icon">
+                                              <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
+                                              <img v-else src="../../assets/icons/subcategory.svg" alt="">
+                                         </span>
+                                     <span>Applications</span>
+                                 </div>
+                             </a>
+                         </router-link>
+                     </li>
                  </ul>
              </div>
 

@@ -1,5 +1,6 @@
 <template>
 <div class="container-fluid">
+
     <div class="container-fluid">
         <div class="row">
             <div class="col">
@@ -130,16 +131,26 @@
         </div>
     </div>
 
+
+    <transition name="toast">
+        <Toast v-if="notification" :message="message" :type="type" />
+    </transition>
 </div>
 </template>
 
 <script>
 import axios from 'axios';
+import Toast from "@/components/Toast";
+
 
 export default {
 name: "Request",
+    components:{Toast},
     data(){
         return{
+            notification:false,
+            message:"",
+            type:"",
             hostels:["BLOCK 1", "BLOCK 2", "BLOCK 3", "BLOCK 4", "BLOCK 5"],
             wings:["WING A", "WING B"],
             floors:[],
@@ -160,12 +171,14 @@ name: "Request",
     },
     methods:{
         request(id){
-            axios.post("http://localhost:8084/api/hostel/apply",{
+            console.log(localStorage.getItem('user'))
+            axios.post("http://localhost:8084/api/hostel/application/apply",{
                 "roomId":id.roomId
             }).then(response => {
-                // eslint-disable-next-line no-undef
-                $('#myModal').modal('show')
-                console.log(response.data)
+                this.message =  response.data.message;
+                this.type =  response.data.type;
+                this.notification = true;
+                setTimeout(() => this.notification = false, 3000)
             }).catch(errorMessage => {
                 console.log(errorMessage)
             });
@@ -202,7 +215,6 @@ name: "Request",
                 axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/"+this.wing+"/all")
                     .then(response => {
                         this.results = []
-                        console.log(response.data)
                         response.data.hostelResponses.forEach(item =>{
                             this.results.push(item);
                         })
@@ -216,12 +228,11 @@ name: "Request",
                 axios.get("http://localhost:8084/api/hostel/"+ this.hostel +"/all")
                     .then(response => {
                         this.results = []
-                        console.log(response.data)
                         response.data.hostelResponses.forEach(item =>{
                             this.results.push(item);
                         })
                     })
-                    .catch(errorMessage => {
+                    .catch((errorMessage) => {
                         console.log(errorMessage)
                     })
             }
@@ -231,7 +242,6 @@ name: "Request",
                 axios.get("http://localhost:8084/api/hostel/all")
                     .then(response => {
                         this.results = []
-                        console.log(response.data)
                         response.data.hostelResponses.forEach(item =>{
                             this.results.push(item);
                         })
@@ -343,5 +353,26 @@ select{
         background: $grey-300;
     }
 
+}
+/* enter transitions */
+.toast-enter-active {
+    animation: wobble 0.5s ease;
+}
+/* leave transitions */
+.toast-leave-to {
+    opacity: 0;
+    transform: translateY(-60px);
+}
+.toast-leave-active {
+    transition: all 0.3s ease;
+}
+@keyframes wobble {
+    0% { transform: translateY(-100px); opacity: 0 }
+    50% { transform: translateY(0px); opacity: 1 }
+    60% { transform: translateX(8px); opacity: 1 }
+    70% { transform: translateX(-8px); opacity: 1 }
+    80% { transform: translateX(4px); opacity: 1 }
+    90% { transform: translateX(-4px); opacity: 1 }
+    100% { transform: translateX(0px); opacity: 1 }
 }
 </style>

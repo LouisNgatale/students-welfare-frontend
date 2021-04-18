@@ -11,6 +11,7 @@ import Suggestions from "@/views/student/welfare/Suggestions";
 import Rules from "@/views/student/welfare/Rules";
 import Dashboard from "@/views/student/dashboard/Dashboard";
 import { Role } from "@/constants/role";
+import Applications from "@/views/student/hostel/Applications";
 
 Vue.use(VueRouter)
 
@@ -53,6 +54,11 @@ const routes = [
         path:'hostel/request',
         meta: { authorize: [Role.Student] },
         component: Request
+      },
+      {
+        path:'hostel/applications',
+        meta: { authorize: [Role.Student] },
+        component: Applications
       },
       {
         path:'welfare/advice',

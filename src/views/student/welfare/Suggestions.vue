@@ -40,8 +40,8 @@
                         <td>{{ result.createdAt }}</td>
                         <td>{{ result.status }}</td>
                         <td class="d-flex justify-content-center">
-                            <span>
-                                <img class="delete" src="../../../assets/icons/Delete.svg" alt="">
+                            <span @click="deleteSuggestion(result.id)" style="cursor: pointer">
+                                <img  class="delete" src="../../../assets/icons/Delete.svg" alt="">
                             </span>
                         </td>
                     </tr>
@@ -144,8 +144,18 @@ export default {
               }).catch(errorMessage => {
               console.log(errorMessage)
           });
+      },
+      deleteSuggestion(id){
+          axios.delete(`http://localhost:8085/api/welfare/suggestions/${id}/delete`)
+              .then(() => {
+                  this.getSuggestions();
+              })
+              .catch(errorMessage => {
+              console.log(errorMessage)
+          });
       }
     },
+
     created() {
        this.getSuggestions()
     }

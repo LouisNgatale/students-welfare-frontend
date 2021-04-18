@@ -1,13 +1,112 @@
 <template>
-<div></div>
+<div class="messaging-container">
+
+    <div class="messages-container container-fluid">
+        <div v-for="message in messages" :key="message.id">
+            <div v-if="message.sentBy === 'dean' ">
+                <div class="received">
+                    <p> {{ message.message_body }} </p>
+                </div>
+            </div>
+
+            <div  v-else>
+                <div class="sent">
+                    <p>{{ message.message_body }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="send-message-container">
+        <div class="input-container">
+            <input placeholder="Enter new message" type="text">
+            <button class="send">Send</button>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
 export default {
-  name: "Advice"
+  name: "Advice",
+    data(){
+      return{
+          messages: [
+              {message_body:"Test",sentBy:"dean"},
+              {message_body:"Test",sentBy:"student"},
+              {message_body:"Test",sentBy:"student"},
+              {message_body:"Test",sentBy:"dean"},
+          ]
+      }
+    }
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+p{
+    margin: 0;
+}
+.messaging-container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .messages-container{
+        height: 90%;
+        overflow: auto;
+        .received{
+            max-width: 30%;
+            overflow-x: hidden;
+            height: auto;
+            background: $received;
+            padding: 6px 7px 8px 9px;
+            border-radius: 10px 10px 10px 0;
+            float: left;
+            clear: both;
+            margin: 5px 0;
+            min-height: 20px;
+        }
+        .sent{
+            max-width: 30%;
+            height: auto;
+            overflow-x: hidden;
+            background: $sent;
+            padding: 6px 7px 8px 9px;
+            border-radius: 10px 10px 0 10px;
+            float: right;
+            clear: both;
+            margin: 5px 0;
+            color: black;
+            min-height: 20px;
+        }
+    }
+    .send-message-container{
+        height: 80px;
+        width: 100%;
+        padding: 10px 20px;
+        .input-container{
+            box-shadow: 0px 10px 15px rgba(0,0,0,.2);
+            height: 100%;
+            overflow: hidden;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            background: white;
+            width: 100%;
+        input{
+            height: 100%;
+            width: 100%;
+            border: none;
+            outline: none;
+            padding: 10px 15px;
+        }
+        .send{
+            height: 100%;
+            width: 120px;
+            background: $primary;
+            color: white;
+            outline:none;
+            border: none;
+        }
+        }
+    }
+}
 </style>

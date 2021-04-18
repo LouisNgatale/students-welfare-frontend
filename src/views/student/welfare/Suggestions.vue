@@ -120,6 +120,7 @@ export default {
               }).then(response => {
                   this.loading = false;
                   this.error = "";
+                  this.getSuggestions()
                   this.message = "Suggestion created successfully";
                   console.log(response.data)
               }).catch(errorMessage => {
@@ -132,18 +133,21 @@ export default {
               this.loading = false;
               this.error = "Please fill the form!";
           }
+      },
+      getSuggestions(){
+          axios.get("http://localhost:8085/api/welfare/suggestions/student/all")
+              .then(response => {
+                  this.results = []
+                  response.data.suggestionsResponses.forEach(item =>{
+                      this.results.push(item);
+                  })
+              }).catch(errorMessage => {
+              console.log(errorMessage)
+          });
       }
     },
     created() {
-        axios.get("http://localhost:8085/api/welfare/suggestions/student/all")
-            .then(response => {
-                this.results = []
-                response.data.suggestionsResponses.forEach(item =>{
-                    this.results.push(item);
-                })
-            }).catch(errorMessage => {
-            console.log(errorMessage)
-        });
+       this.getSuggestions()
     }
 }
 </script>

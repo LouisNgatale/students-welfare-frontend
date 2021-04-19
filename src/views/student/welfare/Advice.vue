@@ -3,15 +3,15 @@
 
     <div class="messages-container container-fluid">
         <div v-for="message in messages" :key="message.id">
-            <div v-if="message.sentBy === 'dean' ">
+            <div v-if="message.sentByStudent !== true ">
                 <div class="received">
-                    <p> {{ message.message_body }} </p>
+                    <p> {{ message.messageBody }} </p>
                 </div>
             </div>
 
             <div  v-else>
                 <div class="sent">
-                    <p>{{ message.message_body }}</p>
+                    <p>{{ message.messageBody }}</p>
                 </div>
             </div>
         </div>
@@ -26,17 +26,23 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "Advice",
     data(){
       return{
-          messages: [
-              {message_body:"Test",sentBy:"dean"},
-              {message_body:"Test",sentBy:"student"},
-              {message_body:"Test",sentBy:"student"},
-              {message_body:"Test",sentBy:"dean"},
-          ]
+          messages: [],
+          conversationId:''
       }
+    },
+    created() {
+      axios.get("http://localhost:8085/api/welfare/advices/conversations/messages/all")
+        .then(response => {
+            this.conversationId = response.data.conversationId;
+            this.messages =  response.data.allMessages.map(message => {
+                return message;
+            })
+        })
     }
 }
 </script>

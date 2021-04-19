@@ -18,8 +18,8 @@
     </div>
     <div class="send-message-container">
         <div class="input-container">
-            <input placeholder="Enter new message" type="text">
-            <button class="send">Send</button>
+            <input v-model="newMessage" placeholder="Enter new message" type="text">
+            <button @click="sendMessage" :disabled="!newMessage" class="send">Send</button>
         </div>
     </div>
 </div>
@@ -32,7 +32,22 @@ export default {
     data(){
       return{
           messages: [],
+          newMessage:"",
           conversationId:''
+      }
+    },
+    methods:{
+      sendMessage(){
+          axios.post("http://localhost:8085/api/welfare/advices/conversations/messages/new",{
+              "conversationId": this.conversationId,
+              "messageBody":this.newMessage
+          })
+          .then(response =>{
+              this.messages.push(response.data);
+              this.newMessage = "";
+          }).catch(errorMessage => {
+              console.log(errorMessage);
+          })
       }
     },
     created() {

@@ -21,12 +21,30 @@
     <teleport to="modal">
         <div v-if="modalOpen" class="modal">
             <div class="new-suggestion">
-                <p>Create new suggestion</p>
+                <p>Create postpone request</p>
                 <div class="mb-3 input">
-                    <input v-model="title" type="text" class="form-control" autocomplete="off" id="title" placeholder="Title">
+                    <input v-model="name" type="text" class="form-control" autocomplete="off" id="name" placeholder="Full Name">
                 </div>
                 <div class="mb-3 input">
-                    <textarea v-model="body" class="form-control" placeholder="Suggestion body" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <input v-model="name" type="text" class="form-control" autocomplete="off" id="regNo" placeholder="Registration Number">
+                </div>
+                <select class="form-select mb-3 input" aria-label="Default select example">
+                    <option selected>Department</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+                <select class="form-select mb-3 input" aria-label="Default select example">
+                    <option selected>Course</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+                <div class="mb-3 input">
+                    <input v-model="name" type="text" class="form-control" autocomplete="off" id="year" placeholder="Year">
+                </div>
+                <div class="mb-3 input">
+                    <textarea v-model="body" class="form-control" placeholder="Reason" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
                 <div v-if="error" class="container-fluid error mb-2">
                     <div class="row m">

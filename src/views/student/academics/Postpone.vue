@@ -23,28 +23,28 @@
             <div class="new-suggestion">
                 <p>Create postpone request</p>
                 <div class="mb-3 input">
-                    <input v-model="name" type="text" class="form-control" autocomplete="off" id="name" placeholder="Full Name">
+                    <input v-model="formData.fullName" type="text" class="form-control" autocomplete="off" id="name" placeholder="Full Name">
                 </div>
                 <div class="mb-3 input">
-                    <input v-model="name" type="text" class="form-control" autocomplete="off" id="regNo" placeholder="Registration Number">
+                    <input v-model="formData.registrationNumber" type="text" class="form-control" autocomplete="off" id="regNo" placeholder="Registration Number">
                 </div>
-                <select class="form-select mb-3 input" aria-label="Default select example">
-                    <option selected>Department</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select class="form-select mb-3 input" aria-label="Default select example" v-model="formData.department">
+                    <option value="" selected disabled>Department</option>
+                    <option v-for="department in departments" :value="department" v-bind:key="department">
+                        {{ department }}
+                    </option>
                 </select>
-                <select class="form-select mb-3 input" aria-label="Default select example">
-                    <option selected>Course</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select class="form-select mb-3 input" aria-label="Default select example" v-model="formData.semester">
+                    <option value="" selected disabled>Semester</option>
+                    <option v-for="semester in semesters" :value="semester" v-bind:key="semester">
+                        {{ semester }}
+                    </option>
                 </select>
                 <div class="mb-3 input">
-                    <input v-model="name" type="text" class="form-control" autocomplete="off" id="year" placeholder="Year">
+                    <input v-model="name" type="text" class="form-control" autocomplete="off" id="year" placeholder="Period e.g (2020 - 2021)">
                 </div>
                 <div class="mb-3 input">
-                    <textarea v-model="body" class="form-control" placeholder="Reason" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea v-model="formData.reason" class="form-control" placeholder="Reason" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
                 <div v-if="error" class="container-fluid error mb-2">
                     <div class="row m">
@@ -85,7 +85,27 @@ export default {
   name: "Postpone",
     data(){
       return{
-          modalOpen: false
+          modalOpen: false,
+          departments:[
+              "COMPUTER STUDIES",
+              "CIVIL ENGINEERING",
+              "LAB TECH",
+              "TELECOMMUNICATION ENGINEERING",
+              "ELECTRICAL ENGINEERING",
+              "MECHANICAL ENGINEERING",
+          ],
+          semesters:["ONE","TWO","BOTH"],
+          formData:{
+              fullName:"",
+              registrationNumber:"",
+              year:"",
+              semester:"",
+              reason:"",
+              department:""
+          },
+          message:"",
+          error:"",
+          loading:false
       }
     }
 }

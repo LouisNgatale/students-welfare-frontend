@@ -127,10 +127,6 @@
                 <div class="mb-3 input">
                     <textarea v-model="formData.reason" class="form-control" placeholder="Reason" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
-                <div class="mb-3">
-                    <label for="formFileMultiple" class="form-label">Attachments</label>
-                    <input class="form-control" type="file" id="formFileMultiple" multiple>
-                </div>
                 <div v-if="error" class="container-fluid error mb-2">
                     <div class="row m">
                         <div class="col pl-0">

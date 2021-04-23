@@ -25,19 +25,15 @@
                 <tr class="table-heading">
                     <th>S/N</th>
                     <th>Subject</th>
-                    <th>Appealed on</th>
-                    <th>Updated on</th>
                     <th>Status</th>
                     <th>Progress</th>
                 </tr>
 
-                <tr class="td">
-                    <td class="sn">1</td>
-                    <td>Kiswahili</td>
-                    <td>01/12/2020</td>
-                    <td>01/12/2020</td>
+                <tr v-for="(appeal,index) in results" class="td">
+                    <td class="sn">{{ index+1 }}</td>
+                    <td>{{ appeal.subject }}</td>
                     <td>
-                        Approved
+                        {{ appeal.status }}
                         <span>
                             <img src="../../../assets/icons/Done.svg" alt="">
                         </span>
@@ -51,49 +47,6 @@
                     </td>
                 </tr>
 
-                <tr class="td">
-                    <td class="sn">2</td>
-                    <td>Civics</td>
-                    <td>01/12/2020</td>
-                    <td>Pending</td>
-                    <td class="">
-                        <span>
-                            Pending
-                        </span>
-                        <span>
-                            <img src="../../../assets/icons/Pending.svg" alt="">
-                        </span>
-                    </td>
-                    <td>
-                        <div>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr class="td">
-                    <td class="sn">2</td>
-                    <td>Biology</td>
-                    <td>01/12/2020</td>
-                    <td>01/12/2020</td>
-                    <td class="">
-                        <span>
-                            Declined
-                        </span>
-                        <span>
-                            <img src="../../../assets/icons/Cross.svg" alt="">
-                        </span>
-                    </td>
-                    <td>
-                        <div>
-                            <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
             </table>
         </div>
     </div>
@@ -191,6 +144,7 @@ name: "Appeal",
                 reason:"",
                 department:""
             },
+            results:[],
             message:"",
             error:"",
             loading:false
@@ -228,6 +182,20 @@ name: "Appeal",
                 this.error = "Please fill the form!";
             }
         },
+        getAppeals(){
+            axios.get("http://localhost:8086/api/academics/appeals/student/get")
+                .then(response => {
+                    this.results = []
+                    response.data.appeals.forEach(item =>{
+                        this.results.push(item);
+                    })
+                }).catch(errorMessage => {
+                console.log(errorMessage)
+            });
+        },
+    },
+    created() {
+        this.getAppeals()
     }
 }
 </script>

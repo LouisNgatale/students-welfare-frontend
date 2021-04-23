@@ -121,7 +121,10 @@
                     </option>
                 </select>
                 <div class="mb-3 input">
-                    <input v-model="name" type="text" class="form-control" autocomplete="off" id="year" placeholder="Subject">
+                    <input v-model="formData.course" type="text" class="form-control" autocomplete="off" id="course" placeholder="Course">
+                </div>
+                <div class="mb-3 input">
+                    <input v-model="formData.subject" type="text" class="form-control" autocomplete="off" id="subject" placeholder="Subject">
                 </div>
 
                 <div class="mb-3 input">
@@ -162,6 +165,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
 name: "Appeal",
     data(){
@@ -181,6 +186,8 @@ name: "Appeal",
                 registrationNumber:"",
                 year:"",
                 semester:"",
+                course:"",
+                subject:"",
                 reason:"",
                 department:""
             },
@@ -188,6 +195,39 @@ name: "Appeal",
             error:"",
             loading:false
         }
+    },
+    methods:{
+        submit(){
+            this.loading = true;
+            if (this.formData.fullName !== ""
+                && this.formData.registrationNumber !== ""
+                && this.formData.department !== ""
+                && this.formData.course !== ""
+                && this.formData.semester !== ""){
+                axios.post("http://localhost:8086/api/academics/appeals/create",{
+                    fullName:this.formData.fullName,
+                    registrationNumber:this.formData.registrationNumber,
+                    department:this.formData.department,
+                    course:this.formData.course,
+                    semester:this.formData.semester,
+                    subject:this.formData.subject,
+                    reason:this.formData.reason,
+                }).then(response => {
+                    this.loading = false;
+                    this.error = "";
+                    this.message = "Appeal created successfully";
+                    console.log(response.data)
+                }).catch(errorMessage => {
+                    this.loading = false;
+                    this.message = "";
+                    this.error = "Couldn't create appeal!";
+                    console.log(errorMessage);
+                })
+            }else {
+                this.loading = false;
+                this.error = "Please fill the form!";
+            }
+        },
     }
 }
 </script>

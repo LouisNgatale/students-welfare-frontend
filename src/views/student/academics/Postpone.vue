@@ -41,7 +41,10 @@
                     </option>
                 </select>
                 <div class="mb-3 input">
-                    <input v-model="name" type="text" class="form-control" autocomplete="off" id="year" placeholder="Period e.g (2020 - 2021)">
+                    <input v-model="formData.course" type="text" class="form-control" autocomplete="off" id="course" placeholder="Course">
+                </div>
+                <div class="mb-3 input">
+                    <input v-model="formData.year" type="text" class="form-control" autocomplete="off" id="year" placeholder="Period e.g (2020 - 2021)">
                 </div>
                 <div class="mb-3 input">
                     <textarea v-model="formData.reason" class="form-control" placeholder="Reason" id="exampleFormControlTextarea1" rows="3"></textarea>
@@ -81,6 +84,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Postpone",
     data(){
@@ -98,6 +103,7 @@ export default {
           formData:{
               fullName:"",
               registrationNumber:"",
+              course:"",
               year:"",
               semester:"",
               reason:"",
@@ -107,6 +113,39 @@ export default {
           error:"",
           loading:false
       }
+    },
+    methods:{
+        submit(){
+            this.loading = true;
+            if (this.formData.fullName !== ""
+                && this.formData.registrationNumber !== ""
+                && this.formData.department !== ""
+                && this.formData.course !== ""
+                && this.formData.semester !== ""){
+                axios.post("http://localhost:8086/api/academics/postpones/create",{
+                    fullName:this.formData.fullName,
+                    registrationNumber:this.formData.registrationNumber,
+                    department:this.formData.department,
+                    course:this.formData.course,
+                    semester:this.formData.semester,
+                    period:this.formData.year,
+                    details:this.formData.reason,
+                }).then(response => {
+                    this.loading = false;
+                    this.error = "";
+                    this.message = "Postpone request sent!";
+                    console.log(response.data)
+                }).catch(errorMessage => {
+                    this.loading = false;
+                    this.message = "";
+                    this.error = "Couldn't send request!";
+                    console.log(errorMessage);
+                })
+            }else {
+                this.loading = false;
+                this.error = "Please fill the form!";
+            }
+        },
     }
 }
 </script>

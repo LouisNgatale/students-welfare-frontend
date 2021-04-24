@@ -17,6 +17,9 @@ import ViewRequests from "@/views/warden/ViewRequests";
 import ViewStudents from "@/views/warden/ViewStudents";
 import SpecialsHOD from "@/views/hod/SpecialsHOD";
 import PostponesHOD from "@/views/hod/PostponesHOD";
+import SpecialsReg from "@/views/registrar/SpecialsReg";
+import PostponesReg from "@/views/registrar/PostponesReg";
+import AppealsReg from "@/views/registrar/AppealsReg";
 
 Vue.use(VueRouter)
 
@@ -124,6 +127,29 @@ const routes = [
     ],
 
     component: () => import(/* webpackChunkName: "about" */ "@/views/hod/Home")
+  },
+  {
+    path: '/registrar/',
+    // meta: { authorize: [Role.Student] },
+    children:[
+      {
+        path:'specials',
+        // meta: { authorize: [Role.Student] },
+        component:SpecialsReg
+      },
+      {
+        path:'postpones',
+        // meta: { authorize: [Role.Student] },
+        component: PostponesReg
+      },
+      {
+        path:'appeals',
+        // meta: { authorize: [Role.Student] },
+        component: AppealsReg
+      }
+    ],
+
+    component: () => import(/* webpackChunkName: "about" */ "@/views/registrar/Home")
   }
 ]
 

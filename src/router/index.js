@@ -12,6 +12,9 @@ import Rules from "@/views/student/welfare/Rules";
 import Dashboard from "@/views/student/dashboard/Dashboard";
 import { Role } from "@/constants/role";
 import Applications from "@/views/student/hostel/Applications";
+import AddHostel from "@/views/warden/AddHostel";
+import ViewRequests from "@/views/warden/ViewRequests";
+import ViewStudents from "@/views/warden/ViewStudents";
 
 Vue.use(VueRouter)
 
@@ -78,6 +81,29 @@ const routes = [
     ],
 
     component: () => import(/* webpackChunkName: "about" */ "@/views/student/Home")
+  },
+  {
+    path: '/warden/',
+    // meta: { authorize: [Role.Student] },
+    children:[
+      {
+        path:'',
+        // meta: { authorize: [Role.Student] },
+        component:AddHostel
+      },
+      {
+        path:'requests',
+        // meta: { authorize: [Role.Student] },
+        component: ViewRequests
+      },
+      {
+        path:'students',
+        // meta: { authorize: [Role.Student] },
+        component: ViewStudents
+      }
+    ],
+
+    component: () => import(/* webpackChunkName: "about" */ "@/views/warden/Home")
   }
 ]
 

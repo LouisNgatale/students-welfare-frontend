@@ -20,6 +20,9 @@ import PostponesHOD from "@/views/hod/PostponesHOD";
 import SpecialsReg from "@/views/registrar/SpecialsReg";
 import PostponesReg from "@/views/registrar/PostponesReg";
 import AppealsReg from "@/views/registrar/AppealsReg";
+import AdvicesDean from "@/views/dean/AdvicesDean";
+import RulesDean from "@/views/dean/RulesDean";
+import SuggestionsDean from "@/views/dean/SuggestionsDean";
 
 Vue.use(VueRouter)
 
@@ -150,6 +153,29 @@ const routes = [
     ],
 
     component: () => import(/* webpackChunkName: "about" */ "@/views/registrar/Home")
+  },
+  {
+    path: '/dean/',
+    // meta: { authorize: [Role.Student] },
+    children:[
+      {
+        path:'suggestions',
+        // meta: { authorize: [Role.Student] },
+        component:SuggestionsDean
+      },
+      {
+        path:'rules',
+        // meta: { authorize: [Role.Student] },
+        component: RulesDean
+      },
+      {
+        path:'advices',
+        // meta: { authorize: [Role.Student] },
+        component: AdvicesDean
+      }
+    ],
+
+    component: () => import(/* webpackChunkName: "about" */ "@/views/dean/Home")
   }
 ]
 

@@ -1,5 +1,5 @@
 <template>
-    <div  class="container-fluid">
+    <div v-if="results.length"  class="container-fluid mt-4">
         <div class="row">
             <div class="col">
                 <table class="table">
@@ -24,16 +24,23 @@
                         <td>{{ result.room }}</td>
                         <td>{{  result.availability }}</td>
                         <td>
-                        <span @click="request(result)" class="request-room mr-2">
+                        <span @click="accept(result)" class="request-room mr-2">
                             <img class="" src="../../assets/icons/accept.png" alt="">
                         </span>
-                        <span @click="request(result)"  class="request-room">
+                        <span @click="deny(result)"  class="request-room">
                             <img class="" src="../../assets/icons/deny.png" alt="">
                         </span>
                         </td>
                     </tr>
 
                 </table>
+            </div>
+        </div>
+    </div>
+    <div v-else class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col p-5 justify-content-center">
+                <p>No requests made yet!</p>
             </div>
         </div>
     </div>
@@ -49,16 +56,45 @@ name: "ViewRequests",
         results:[]
     }
     },
+    methods:{
+        accept:function (result){
+            axios.post(`http://localhost:8084/api/hoste/warden/applications/${result.id}/accept`,{
+                roomId:result.roomId,
+                studentId:result.requestedBy,
+                requestId:result.id
+            })
+                .then(() => {
+                    this.getRequests()
+                }).catch(errorMessage => {
+                console.log(errorMessage)
+            });
+        },
+        deny:function (result){
+            axios.post(`http://localhost:8084/api/hoste/warden/applications/${result.id}/deny`,{
+                roomId:result.roomId,
+                studentId:result.requestedBy,
+                requestId:result.id
+            })
+                .then(() => {
+                    this.getRequests()
+                }).catch(errorMessage => {
+                console.log(errorMessage)
+            });
+        },
+        getRequests:function (){
+            axios.get("http://localhost:8084/api/hoste/warden/applications")
+                .then(response => {
+                    this.results = []
+                    response.data.hostelResponses.forEach(item =>{
+                        this.results.push(item);
+                    })
+                }).catch(errorMessage => {
+                console.log(errorMessage)
+            });
+        }
+    },
     created() {
-        axios.get("http://localhost:8084/api/hoste/warden/applications")
-            .then(response => {
-                this.results = []
-                response.data.hostelResponses.forEach(item =>{
-                    this.results.push(item);
-                })
-            }).catch(errorMessage => {
-            console.log(errorMessage)
-        });
+        this.getRequests()
     }
 }
 </script>

@@ -1,6 +1,5 @@
 <template>
 <div class="messaging-container">
-
     <div class="messages-container container-fluid">
         <div v-for="message in messages" :key="message.id">
             <div v-if="message.sentByStudent !== true ">

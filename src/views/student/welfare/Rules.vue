@@ -22,7 +22,7 @@
     <div class="container-fluid">
         <div v-for="rule in rules" :key="rule.id" class="row">
             <div class="col">
-                <div class="my-2 rule-container">
+                <div class="my-2 message-container">
                     <div class="title">
                         {{ rule.title }}
                     </div>
@@ -74,7 +74,7 @@ export default {
     display: flex;
     justify-content: space-between;
 }
-.rule-container{
+.message-container{
     background: white;
     width: 100%;
     min-height: auto;

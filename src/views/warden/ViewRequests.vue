@@ -6,23 +6,23 @@
 
                     <tr class="table-heading">
                         <th>S/N</th>
+                        <th>STUDENT</th>
                         <th>HOSTEL</th>
                         <th>WING</th>
                         <th>FLOOR</th>
                         <th>ROOM</th>
                         <th>AVAILABILITY</th>
-                        <th>CONDITION</th>
                         <th>ACTION</th>
                     </tr>
 
-                    <tr class="td">
-                        <td class="sn">test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
+                    <tr v-for="(result,index) in results" v-bind:key="result.roomId" class="td">
+                        <td class="sn">{{ index + 1 }}</td>
+                        <td>{{ result.studentName }}</td>
+                        <td>{{ result.hostel }}</td>
+                        <td>{{ result.wing }}</td>
+                        <td>{{ result.floor }}</td>
+                        <td>{{ result.room }}</td>
+                        <td>{{  result.availability }}</td>
                         <td>
                         <span @click="request(result)" class="request-room mr-2">
                             <img class="" src="../../assets/icons/accept.png" alt="">
@@ -40,12 +40,25 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
 name: "ViewRequests",
     data(){
     return{
         results:[]
     }
+    },
+    created() {
+        axios.get("http://localhost:8084/api/hoste/warden/applications")
+            .then(response => {
+                this.results = []
+                response.data.hostelResponses.forEach(item =>{
+                    this.results.push(item);
+                })
+            }).catch(errorMessage => {
+            console.log(errorMessage)
+        });
     }
 }
 </script>
@@ -117,7 +130,6 @@ select{
         border-radius: 10px;
         background: $grey-300;
     }
-
 }
 /* enter transitions */
 .toast-enter-active {

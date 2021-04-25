@@ -69,7 +69,7 @@ name: "Applications",
         }).catch(errorMessage => {
             console.log(errorMessage)
         });
-}
+    }
 }
 </script>
 

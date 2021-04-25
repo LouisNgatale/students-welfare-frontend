@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div  class="container-fluid">
+    <div  class="container-fluid mt-4">
         <div class="row">
             <div class="col">
                 <table class="table">
@@ -15,13 +15,13 @@
                         <th>ACTION</th>
                     </tr>
 
-                    <tr class="td">
-                        <td class="sn">test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
+                    <tr v-for="(result,index) in results" :key="index" class="td">
+                        <td class="sn">{{ index+1 }}</td>
+                        <td>{{ result.studentName }}</td>
+                        <td>{{ result.hostel }}</td>
+                        <td>{{ result.wing }}</td>
+                        <td>{{ result.floor }}</td>
+                        <td>{{ result.room }}</td>
                         <td>
                         <span @click="request(result)" class="request-room mr-2">
                             <img class="" src="../../assets/icons/accept.png" alt="">
@@ -40,8 +40,31 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-name: "ViewStudents"
+name: "ViewStudents",
+    data(){
+        return{
+            results:[]
+        }
+    },
+    methods:{
+    getBeds:function (){
+        axios.get("http://localhost:8084/api/hostel/warden/occupied/beds")
+            .then(response => {
+                this.results = []
+                response.data.beds.forEach(item =>{
+                    this.results.push(item);
+                })
+            }).catch(errorMessage => {
+            console.log(errorMessage)
+        });
+    }
+    },
+    created() {
+        this.getBeds()
+    }
 }
 </script>
 

@@ -58,7 +58,7 @@ name: "ViewRequests",
     },
     methods:{
         accept:function (result){
-            axios.post(`http://localhost:8084/api/hoste/warden/applications/${result.id}/accept`,{
+            axios.post(`http://localhost:8084/api/hostel/warden/applications/${result.id}/accept`,{
                 roomId:result.roomId,
                 studentId:result.requestedBy,
                 requestId:result.id
@@ -70,7 +70,7 @@ name: "ViewRequests",
             });
         },
         deny:function (result){
-            axios.post(`http://localhost:8084/api/hoste/warden/applications/${result.id}/deny`,{
+            axios.post(`http://localhost:8084/api/hostel/warden/applications/${result.id}/deny`,{
                 roomId:result.roomId,
                 studentId:result.requestedBy,
                 requestId:result.id
@@ -82,7 +82,7 @@ name: "ViewRequests",
             });
         },
         getRequests:function (){
-            axios.get("http://localhost:8084/api/hoste/warden/applications")
+            axios.get("http://localhost:8084/api/hostel/warden/applications")
                 .then(response => {
                     this.results = []
                     response.data.hostelResponses.forEach(item =>{

@@ -27,25 +27,21 @@
                         <th>Student</th>
                         <th>ID</th>
                         <th>Subject</th>
-                        <th>Updated on</th>
                         <th>Level</th>
                         <th>Actions</th>
                     </tr>
 
-                    <tr class="td">
+                    <tr v-for="(result,index) in results" :key="index" class="td">
                         <td class="sn">2</td>
-                        <td>Name</td>
-                        <td>ID</td>
-                        <td>Subject</td>
-                        <td>Updated at</td>
+                        <td>{{result.fullName}}</td>
+                        <td>{{result.registrationNumber}}</td>
+                        <td>{{result.subject}}</td>
+                        <td>{{result.level}}</td>
                         <td>
-                            HOD
-                        </td>
-                        <td>
-                            <select class="form-select input" aria-label="Default select example" v-model="formData.semester">
-                                <option value="" selected >Send to Exam co-ordinator</option>
-                                <option value="" selected >Send to registrar</option>
-                                <option value="" selected >Deny</option>
+                            <select class="form-select input" v-model="result.status" @change="changed(result)" aria-label="Default select example">
+                                <option value="Pending" selected disabled>Action</option>
+                                <option value="Registrar">Send to Registrar</option>
+                                <option value="Denied"  >Deny</option>
                             </select>
                         </td>
                     </tr>
@@ -53,6 +49,42 @@
                 </table>
             </div>
         </div>
+
+        <teleport name="modal" to="modal">
+            <div v-if="modalOpen" class="modal">
+                <div class="new-suggestion">
+                        <p>Confirm</p>
+                        <div v-if="message" class="container-fluid success mb-2">
+                            <div class="row m">
+                                <div class="col pl-0">
+                                    {{ message }}
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="error" class="container-fluid error mb-2">
+                            <div class="row m">
+                                <div class="col pl-0">
+                                    {{ error }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row jus">
+                                <div class="col pl-0">
+                                    <button :disabled="loading" class="btn btn-primary mr-2" @click="proceed">
+                                        <span v-show="loading" class="spinner-border spinner-border-sm mr-2"></span>
+                                        Proceed
+                                    </button>
+                                    <button class="btn btn-danger" @click="modalOpen = false">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </teleport>
+
 
 
     </div>
@@ -65,66 +97,51 @@ export default {
     name: "Specials",
     data(){
         return{
-            modalOpen: false,
-            departments:[
-                "COMPUTER STUDIES",
-                "CIVIL ENGINEERING",
-                "LAB TECH",
-                "TELECOMMUNICATION ENGINEERING",
-                "ELECTRICAL ENGINEERING",
-                "MECHANICAL ENGINEERING",
-            ],
-            semesters:["ONE","TWO","BOTH"],
             results:[],
-            formData:{
-                fullName:"",
-                registrationNumber:"",
-                year:"",
-                semester:"",
-                course:"",
-                subject:"",
-                reason:"",
-                department:""
-            },
+            action:"",
+            currentStatus:"",
+            loading:false,
+            id:"",
+            modalOpen: false,
             message:"",
             error:"",
-            loading:false
         }
     },
     methods:{
-        submit(){
-            this.loading = true;
-            if (this.formData.fullName !== ""
-                && this.formData.registrationNumber !== ""
-                && this.formData.department !== ""
-                && this.formData.course !== ""
-                && this.formData.semester !== ""){
-                axios.post("http://localhost:8086/api/academics/appeals/create",{
-                    fullName:this.formData.fullName,
-                    registrationNumber:this.formData.registrationNumber,
-                    department:this.formData.department,
-                    course:this.formData.course,
-                    semester:this.formData.semester,
-                    subject:this.formData.subject,
-                    reason:this.formData.reason,
-                }).then(response => {
-                    this.loading = false;
+        changed:function(e){
+            this.modalOpen=true
+            this.message=""
+            this.error = "";
+            this.currentStatus = e.status
+            console.log(e.status);
+            this.id = e.id
+        },
+        proceed:function(){
+            if(this.currentStatus === "Registrar"){
+                axios.put(`http://localhost:8086/api/academics/specials/hod/${this.id}/registrar`)
+                .then(() => {
+                    this.message="Successfully updated!"
                     this.error = "";
-                    this.message = "Appeal created successfully";
-                    console.log(response.data)
-                }).catch(errorMessage => {
-                    this.loading = false;
-                    this.message = "";
-                    this.error = "Couldn't create appeal!";
-                    console.log(errorMessage);
+
                 })
-            }else {
-                this.loading = false;
-                this.error = "Please fill the form!";
+                .catch(() => {
+                    this.error = "Couldn't update!";
+                    this.message = "";
+                })
+            }else{
+                axios.put(`http://localhost:8086/api/academics/specials/hod/${this.id}/deny`)
+                .then(() => {
+                    this.message="Successfully updated!"
+                    this.error = "";
+                })
+                .catch(() => {
+                    this.error = "Couldn't update!";
+                    this.message = "";
+                })
             }
         },
         getSpecials(){
-            axios.get("http://localhost:8086/api/academics/specials/student/get")
+            axios.get("http://localhost:8086/api/academics/specials/get/all")
                 .then(response => {
                     this.results = []
                     response.data.specials.forEach(item =>{

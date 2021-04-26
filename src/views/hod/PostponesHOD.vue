@@ -17,9 +17,9 @@
                     <td>{{result.period}}</td>
                     <td>
                         <select class="form-select input" v-model="result.status" @change="changed(result)" aria-label="Default select example">
-                            <option value="" selected disabled>Action</option>
-                            <option value="Approved">Approve</option>
-                            <option value="Denied"  >Deny</option>
+                            <option value="Pending" selected disabled>Action</option>
+                                <option value="Registrar">Send to Registrar</option>
+                                <option value="Denied"  >Deny</option>
                         </select>
                     </td>
                 </tr>
@@ -91,8 +91,8 @@ methods:{
         this.id = e.id
     },
     proceed:function(){
-        if(this.currentStatus === "Approved"){
-            axios.put(`http://localhost:8086/api/academics/postpones/hod/${this.id}/approve`)
+        if(this.currentStatus === "Registrar"){
+            axios.put(`http://localhost:8086/api/academics/postpones/hod/${this.id}/registrar`)
             .then(() => {
                 this.message="Successfully updated!"
                 this.error = "";

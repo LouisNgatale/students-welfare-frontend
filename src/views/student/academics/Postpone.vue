@@ -146,6 +146,9 @@ export default {
                 this.error = "Please fill the form!";
             }
         },
+    },
+    created(){
+        
     }
 }
 </script>

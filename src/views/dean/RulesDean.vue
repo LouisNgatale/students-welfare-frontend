@@ -143,10 +143,8 @@ export default {
                 this.rules = response.data.suggestionsResponses.map(item => {
                     return item;
                 })
-                console.log(this.rules)
             })
-            .catch(errorMessage => {
-                console.log(errorMessage);
+            .catch(() => {
             })
     }
 }

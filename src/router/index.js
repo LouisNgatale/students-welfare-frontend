@@ -23,10 +23,24 @@ import AppealsReg from "@/views/registrar/AppealsReg";
 import AdvicesDean from "@/views/dean/AdvicesDean";
 import RulesDean from "@/views/dean/RulesDean";
 import SuggestionsDean from "@/views/dean/SuggestionsDean";
+import notFound from '@/views/404'
+import restricted from '@/views/403'
 
 Vue.use(VueRouter)
 
 const routes = [
+   {
+     // matches everything else  
+     path: '*',
+     name: 'notFound',
+     component: notFound
+   },
+   {
+     // matches everything else  
+     path: '/403',
+     name: 'restricted',
+     component: restricted
+   },
   {
     path: '/login',
     name: 'Login',
@@ -96,17 +110,17 @@ const routes = [
     children:[
       {
         path:'',
-        // meta: { authorize: [Role.Student] },
+        meta: { authorize: [Role.Warden] },
         component:AddHostel
       },
       {
         path:'requests',
-        // meta: { authorize: [Role.Student] },
+        meta: { authorize: [Role.Warden] },
         component: ViewRequests
       },
       {
         path:'students',
-        // meta: { authorize: [Role.Student] },
+        meta: { authorize: [Role.Warden] },
         component: ViewStudents
       }
     ],
@@ -115,16 +129,16 @@ const routes = [
   },
   {
     path: '/hod/',
-    // meta: { authorize: [Role.Student] },
+    meta: { authorize: [Role.Hod] },
     children:[
       {
         path:'specials',
-        // meta: { authorize: [Role.Student] },
+        meta: { authorize: [Role.Hod] },
         component:SpecialsHOD
       },
       {
         path:'postpones',
-        // meta: { authorize: [Role.Student] },
+        meta: { authorize: [Role.Hod] },
         component: PostponesHOD
       }
     ],
@@ -133,21 +147,21 @@ const routes = [
   },
   {
     path: '/registrar/',
-    // meta: { authorize: [Role.Student] },
+    meta: { authorize: [Role.Registrar] },
     children:[
       {
         path:'specials',
-        // meta: { authorize: [Role.Student] },
+        meta: { authorize: [Role.Registrar] },
         component:SpecialsReg
       },
       {
         path:'postpones',
-        // meta: { authorize: [Role.Student] },
+        meta: { authorize: [Role.Registrar] },
         component: PostponesReg
       },
       {
         path:'appeals',
-        // meta: { authorize: [Role.Student] },
+        meta: { authorize: [Role.Registrar] },
         component: AppealsReg
       }
     ],
@@ -156,21 +170,21 @@ const routes = [
   },
   {
     path: '/dean/',
-    // meta: { authorize: [Role.Student] },
+    meta: { authorize: [Role.Dean] },
     children:[
       {
         path:'suggestions',
-        // meta: { authorize: [Role.Student] },
+        meta: { authorize: [Role.Dean] },
         component:SuggestionsDean
       },
       {
         path:'rules',
-        // meta: { authorize: [Role.Student] },
+        meta: { authorize: [Role.Dean] },
         component: RulesDean
       },
       {
         path:'advices',
-        // meta: { authorize: [Role.Student] },
+        meta: { authorize: [Role.Dean] },
         component: AdvicesDean
       }
     ],
@@ -203,10 +217,10 @@ router.beforeEach((to, from, next) => {
       return next({ path: '/login', query: { returnUrl: to.path } });
     }
 
-    // check if route is restricted by role
+    // check if user has required role
     if (authorize.length && !roles.includes(authorize[0])) {
       // role not authorised so redirect to home page
-      return next({ path: '/' });
+      return next({ path: '/403' });
     }
   }
 

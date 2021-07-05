@@ -29,7 +29,7 @@
                     <th>Progress</th>
                 </tr>
 
-                <tr v-for="(appeal,index) in results" class="td">
+                <tr v-bind:key="index" v-for="(appeal,index) in results" class="td">
                     <td class="sn">{{ index+1 }}</td>
                     <td>{{ appeal.subject }}</td>
                     <td>

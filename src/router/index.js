@@ -23,6 +23,7 @@ import AppealsReg from "@/views/registrar/AppealsReg";
 import AdvicesDean from "@/views/dean/AdvicesDean";
 import RulesDean from "@/views/dean/RulesDean";
 import SuggestionsDean from "@/views/dean/SuggestionsDean";
+import Home from "@/views/Home";
 import notFound from '@/views/404'
 import restricted from '@/views/403'
 
@@ -40,6 +41,11 @@ const routes = [
      path: '/403',
      name: 'restricted',
      component: restricted
+   },
+   {
+     path: '/',
+     name: 'Home',
+     component: Home
    },
   {
     path: '/login',

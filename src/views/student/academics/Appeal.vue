@@ -34,14 +34,17 @@
                     <td>{{ appeal.subject }}</td>
                     <td>
                         {{ appeal.status }}
-                        <span>
+                        <span v-if="appeal.status == 'Approved'">
                             <img src="../../../assets/icons/Done.svg" alt="">
+                        </span>
+                        <span v-if="appeal.status == 'Pending'">
+                            <img src="../../../assets/icons/Pending.svg" alt="">
                         </span>
                     </td>
                     <td>
                         <div>
                             <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">100%</div>
+                                <div class="progress-bar bg-success" role="progressbar" :style="{ width: appeal.status == 'Approved' ? levels.done : levels.half }" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{ appeal.status }}</div>
                             </div>
                         </div>
                     </td>
@@ -145,6 +148,10 @@ name: "Appeal",
                 department:""
             },
             results:[],
+            levels:{
+                done:'100%',
+                half:'50%'
+            },
             message:"",
             error:"",
             loading:false

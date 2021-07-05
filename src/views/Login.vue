@@ -59,7 +59,6 @@
                 >Username is required!</div>
             </div>
 
-
             <div class="form-floating">
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
                        v-model="user.password"

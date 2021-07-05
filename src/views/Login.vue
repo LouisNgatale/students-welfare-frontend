@@ -78,7 +78,7 @@
             </div>
 
             <div class="button">
-                <button :disabled="loading" class="btn btn-primary">
+                <button :disabled="loading" class="btn mr-1 btn-primary">
                     <span v-show="loading" class="spinner-border spinner-border-sm mr-2"></span>
                     <span>Login</span>
                 </button>
@@ -124,17 +124,17 @@ name: "Login",
                         () => {
                             this.$router.push('/student');
                         },
-                        error => {
+                        () => {
                             this.loading = false;
-                            this.message =
+                            this.message = "Error loading user";
+                            /* this.message =
                                 (error.response && error.response.data) ||
                                 error.message ||
-                                error.toString();
+                                error.toString(); */
                         }
                     );
                 }
-            });
-
+            })
         },
         loginForm:function (){
             // eslint-disable-next-line no-undef

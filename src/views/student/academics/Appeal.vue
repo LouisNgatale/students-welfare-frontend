@@ -249,7 +249,6 @@ name: "Appeal",
     }
 
 }
-
 .modal {
     position: absolute;
     top: 0; right: 0; bottom: 0; left: 0;
@@ -259,7 +258,6 @@ name: "Appeal",
     align-items: center;
     justify-content: center;
 }
-
 .modal > div {
     display: flex;
     flex-direction: column;

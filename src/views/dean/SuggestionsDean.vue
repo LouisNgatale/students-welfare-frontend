@@ -13,9 +13,6 @@
                 <div class="col ">
                     <div class="top-header my-2">
                         <span>Add suggestion</span>
-                        <button @click="modalOpen = true" class="add_appeal">
-                            <img src="../../assets/icons/plus.svg" alt="">
-                        </button>
                     </div>
                 </div>
             </div>

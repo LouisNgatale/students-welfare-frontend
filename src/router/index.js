@@ -112,21 +112,21 @@ const routes = [
   },
   {
     path: '/warden/',
-    // meta: { authorize: [Role.Student] },
+    meta: { authorize: [Role.Admin] },
     children:[
       {
         path:'',
-        meta: { authorize: [Role.Warden] },
+        meta: { authorize: [Role.Admin] },
         component:AddHostel
       },
       {
         path:'requests',
-        meta: { authorize: [Role.Warden] },
+        meta: { authorize: [Role.Admin] },
         component: ViewRequests
       },
       {
         path:'students',
-        meta: { authorize: [Role.Warden] },
+        meta: { authorize: [Role.Admin] },
         component: ViewStudents
       }
     ],
@@ -176,21 +176,21 @@ const routes = [
   },
   {
     path: '/dean/',
-    meta: { authorize: [Role.Dean] },
+    meta: { authorize: [Role.Admin] },
     children:[
       {
         path:'suggestions',
-        meta: { authorize: [Role.Dean] },
+        meta: { authorize: [Role.Admin] },
         component:SuggestionsDean
       },
       {
         path:'rules',
-        meta: { authorize: [Role.Dean] },
+        meta: { authorize: [Role.Admin] },
         component: RulesDean
       },
       {
         path:'advices',
-        meta: { authorize: [Role.Dean] },
+        meta: { authorize: [Role.Admin] },
         component: AdvicesDean
       }
     ],

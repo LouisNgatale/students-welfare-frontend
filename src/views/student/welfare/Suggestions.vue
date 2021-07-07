@@ -58,6 +58,15 @@
                 <div class="mb-3 input">
                     <input v-model="title" type="text" class="form-control" autocomplete="off" id="title" placeholder="Title">
                 </div>
+                
+                <select class="form-select form-control mb-3" id="floatingSelectGrid" aria-label="Floating label select example"
+                        v-model="category">
+                    <option selected disabled>Category</option>
+                    <option v-for="cat in categories" :value="cat" v-bind:key="cat">
+                        {{ cat }}
+                    </option>
+                </select>
+
                 <div class="mb-3 input">
                     <textarea v-model="body" class="form-control" placeholder="Suggestion body" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
@@ -104,7 +113,9 @@ export default {
           title:"",
           body:"",
           error:"",
+          category:"Academy",
           message:"",
+          categories:["Academy","Catering","Hostel"],
           loading:false,
           results:[],
           modalOpen: false
@@ -116,7 +127,8 @@ export default {
           if (this.title !== "" && this.body !== ""){
               axios.post("http://localhost:8085/api/welfare/suggestions/create",{
                   title:this.title,
-                  message:this.body
+                  message:this.body,
+                  category:this.category
               }).then(response => {
                   this.loading = false;
                   this.error = "";

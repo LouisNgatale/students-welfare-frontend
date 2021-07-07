@@ -38,11 +38,13 @@
                         <td>{{result.subject}}</td>
                         <td>{{result.level}}</td>
                         <td>
-                            <select class="form-select input" v-model="result.status" @change="changed(result)" aria-label="Default select example">
+                            <select class="form-select input d-inline mr-2"  v-model="result.status" @change="changed(result)" aria-label="Default select example">
                                 <option value="Pending" selected disabled>Action</option>
                                 <option value="Registrar">Send to Registrar</option>
                                 <option value="Denied"  >Deny</option>
                             </select>
+
+                            <button @click="preview(result)" class="btn btn-outline-info">View Details</button>
                         </td>
                     </tr>
 
@@ -85,6 +87,39 @@
             </div>
         </teleport>
 
+        <teleport name="modal2" to="modal">
+            <div v-if="viewDetails" class="modal">
+                <div class="new-suggestion">
+                        <div>
+                            <p>Name: {{ preview_details.fullName }}</p>
+                        </div>
+                        <div>
+                            <p>Course: {{ preview_details.registrationNumber}}</p>
+                        </div>
+                        <div>
+                            <p>Semester: {{preview_details.semester}}</p>
+                        </div>
+                        <div>
+                            Description:
+                            <p>{{ preview_details.reason }}</p>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row jus">
+                                <div class="col pl-0">
+                                    <button :disabled="loading" class="btn btn-primary mr-2" @click="proceed">
+                                        <span v-show="loading" class="spinner-border spinner-border-sm mr-2"></span>
+                                        Proceed
+                                    </button>
+                                    <button class="btn btn-danger" @click="viewDetails = false">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </teleport>
+
 
 
     </div>
@@ -98,12 +133,14 @@ export default {
     data(){
         return{
             results:[],
+            preview_details:"",
             action:"",
             currentStatus:"",
             loading:false,
             id:"",
             modalOpen: false,
             message:"",
+            viewDetails:false,
             error:"",
         }
     },
@@ -113,8 +150,12 @@ export default {
             this.message=""
             this.error = "";
             this.currentStatus = e.status
-            console.log(e.status);
             this.id = e.id
+        },
+        preview:function(result){
+            this.viewDetails = true;
+            this.preview_details = result
+            console.log(result)
         },
         proceed:function(){
             if(this.currentStatus === "Registrar"){

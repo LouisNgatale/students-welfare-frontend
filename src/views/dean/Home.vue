@@ -53,7 +53,7 @@
                           <img v-if="isActive" src="../../assets/icons/dashboard-active.svg" alt="">
                           <img v-else src="../../assets/icons/dashboard.svg" alt="">
                       </span>
-                            <span class="menu-title">Rules</span>
+                            <span class="menu-title">Rules & Regulations</span>
                         </div>
                     </a>
                 </router-link>

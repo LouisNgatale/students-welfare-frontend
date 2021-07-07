@@ -208,7 +208,7 @@
                                               <img v-if="isActive" src="../../assets/icons/subcategory-active.svg" alt="">
                                               <img v-else src="../../assets/icons/subcategory.svg" alt="">
                                          </span>
-                                     <span>Make suggestions</span>
+                                     <span>Suggestions & Complains</span>
                                  </div>
                              </a>
                          </router-link>

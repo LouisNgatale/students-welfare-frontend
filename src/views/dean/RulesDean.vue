@@ -1,5 +1,6 @@
 <template>
     <div class="container-fluid">
+        
         <div class="container-fluid my-2">
             <div class="row">
                 <div class="col">
@@ -112,7 +113,7 @@ export default {
             body:"",
             error:"",
             message:"",
-            categories:['STUDENTS','ACADEMICS','STAFF'],
+            categories:['EXAMS','ACADEMICS','DISCIPLINE', 'ACCOMODATION'],
             cat:"",
             loading:false,
             results:[],

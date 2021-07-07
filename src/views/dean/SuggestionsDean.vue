@@ -4,16 +4,7 @@
             <div class="row">
                 <div class="col">
                     <span class="path">STUDENT WELFARE > </span>
-                    <span class="sub-path">Suggestions</span>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid">
-            <div class="row ">
-                <div class="col ">
-                    <div class="top-header my-2">
-                        <span>Add suggestion</span>
-                    </div>
+                    <span class="sub-path">Suggestions & Complains</span>
                 </div>
             </div>
         </div>
@@ -26,6 +17,7 @@
                         <tr class="table-heading">
                             <th>S/N</th>
                             <th>Title</th>
+                            <th>Category</th>
                             <th>Created at</th>
                             <th>Status</th>
                         </tr>
@@ -33,6 +25,7 @@
                         <tr v-for="(result, index) in results" v-bind:key="index" class="td">
                             <td class="sn">{{ index + 1 }}</td>
                             <td>{{ result.title }}</td>
+                            <td>{{ result.category }}</td>
                             <td>{{ result.createdAt }}</td>
                             <td>{{ result.status }}</td>
                         </tr>
@@ -98,6 +91,7 @@ export default {
             message:"",
             loading:false,
             results:[],
+            categories:["BENG-20","BENG-19","BENG-18","GST-20","OD-18","OD-19","OD-20"],
             modalOpen: false
         }
     },
@@ -126,7 +120,7 @@ export default {
             }
         },
         getSuggestions(){
-            axios.get("http://localhost:8085/api/welfare/suggestions/student/all")
+            axios.get("http://localhost:8085/api/welfare/suggestions/all")
                 .then(response => {
                     this.results = []
                     response.data.suggestionsResponses.forEach(item =>{

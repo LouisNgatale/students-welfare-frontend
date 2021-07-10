@@ -17,7 +17,42 @@
             </div>
         </div>
     </div>
+  <div class="row">
+    <div class="col">
+      <table class="table">
 
+        <tr class="table-heading">
+          <th>S/N</th>
+          <th>Subject</th>
+          <th>Status</th>
+          <th>Progress</th>
+        </tr>
+
+        <tr v-bind:key="index" v-for="(postpone,index) in results" class="td">
+          <td class="sn">{{ index+1 }}</td>
+          <td>{{ postpone.course }}</td>
+          <td>
+            {{ postpone.status }}
+            <span v-if="postpone.status === 'Approved'">
+                            <img src="../../../assets/icons/Done.svg" alt="">
+                        </span>
+            <span v-if="postpone.status === 'Pending'">
+                            <img src="../../../assets/icons/Pending.svg" alt="">
+                        </span>
+          </td>
+          <td>
+            <div>
+              <div class="progress">
+                <div v-if="postpone.status === 'Denied'" class="progress-bar bg-danger" role="progressbar" style="width: 100% " aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{ postpone.status }}</div>
+                <div v-else class="progress-bar bg-success" role="progressbar" :style="{ width: postpone.status === 'Approved' ? levels.done : levels.half }" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{ postpone.status }}</div>
+
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
     <teleport to="modal">
         <div v-if="modalOpen" class="modal">
             <div class="new-suggestion">
@@ -90,28 +125,33 @@ export default {
   name: "Postpone",
     data(){
       return{
-          modalOpen: false,
-          departments:[
-              "COMPUTER STUDIES",
-              "CIVIL ENGINEERING",
-              "LAB TECH",
-              "TELECOMMUNICATION ENGINEERING",
-              "ELECTRICAL ENGINEERING",
-              "MECHANICAL ENGINEERING",
-          ],
-          semesters:["ONE","TWO","BOTH"],
-          formData:{
-              fullName:"",
-              registrationNumber:"",
-              course:"",
-              year:"",
-              semester:"",
-              reason:"",
-              department:""
-          },
-          message:"",
-          error:"",
-          loading:false
+        modalOpen: false,
+        departments:[
+            "COMPUTER STUDIES",
+            "CIVIL ENGINEERING",
+            "LAB TECH",
+            "TELECOMMUNICATION ENGINEERING",
+            "ELECTRICAL ENGINEERING",
+            "MECHANICAL ENGINEERING",
+        ],
+        semesters:["ONE","TWO","BOTH"],
+        formData:{
+            fullName:"",
+            registrationNumber:"",
+            course:"",
+            year:"",
+            semester:"",
+            reason:"",
+            department:""
+        },
+        message:"",
+        error:"",
+        results:[],
+        levels:{
+          done:'100%',
+          half:'50%'
+        },
+        loading:false
       }
     },
     methods:{
@@ -128,6 +168,7 @@ export default {
                     department:this.formData.department,
                     course:this.formData.course,
                     semester:this.formData.semester,
+                    reason:this.formData.reason,
                     period:this.formData.year,
                     details:this.formData.reason,
                 }).then(response => {
@@ -148,7 +189,16 @@ export default {
         },
     },
     created(){
-        
+      axios.get("http://localhost:8086/api/academics/postpones/student/get")
+          .then(response => {
+            this.results = []
+            response.data.postpones.forEach(item =>{
+              this.results.push(item);
+            });
+            console.log(response)
+          }).catch(errorMessage => {
+        console.log(errorMessage)
+      });
     }
 }
 </script>

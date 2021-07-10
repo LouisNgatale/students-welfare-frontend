@@ -44,12 +44,12 @@
                     <td>
                         <div>
                             <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" :style="{ width: appeal.status == 'Approved' ? levels.done : levels.half }" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{ appeal.status }}</div>
+                              <div v-if="postpone.status === 'Denied'" class="progress-bar bg-danger" role="progressbar" style="width: 100% " aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{ postpone.status }}</div>
+                              <div v-else class="progress-bar bg-success" role="progressbar" :style="{ width: postpone.status === 'Approved' ? levels.done : levels.half }" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{ postpone.status }}</div>
                             </div>
                         </div>
                     </td>
                 </tr>
-
             </table>
         </div>
     </div>

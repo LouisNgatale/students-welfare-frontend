@@ -34,18 +34,18 @@
                     <td>{{ appeal.subject }}</td>
                     <td>
                         {{ appeal.status }}
-                        <span v-if="appeal.status == 'Approved'">
+                        <span v-if="appeal.status === 'Approved'">
                             <img src="../../../assets/icons/Done.svg" alt="">
                         </span>
-                        <span v-if="appeal.status == 'Pending'">
+                        <span v-if="appeal.status === 'Pending'">
                             <img src="../../../assets/icons/Pending.svg" alt="">
                         </span>
                     </td>
                     <td>
                         <div>
                             <div class="progress">
-                              <div v-if="postpone.status === 'Denied'" class="progress-bar bg-danger" role="progressbar" style="width: 100% " aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{ postpone.status }}</div>
-                              <div v-else class="progress-bar bg-success" role="progressbar" :style="{ width: postpone.status === 'Approved' ? levels.done : levels.half }" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{ postpone.status }}</div>
+                              <div v-if="appeal.status === 'Denied'" class="progress-bar bg-danger" role="progressbar" style="width: 100% " aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{ appeal.status }}</div>
+                              <div v-else class="progress-bar bg-success" role="progressbar" :style="{ width: appeal.status === 'Approved' ? levels.done : levels.half }" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{ appeal.status }}</div>
                             </div>
                         </div>
                     </td>
@@ -196,6 +196,7 @@ name: "Appeal",
                     response.data.appeals.forEach(item =>{
                         this.results.push(item);
                     })
+                    console.log(this.results);
                 }).catch(errorMessage => {
                 console.log(errorMessage)
             });

@@ -164,7 +164,7 @@ export default {
                 && this.formData.department !== ""
                 && this.formData.course !== ""
                 && this.formData.semester !== ""){
-                axios.post("http://localhost:8086/api/academics/appeals/create",{
+                axios.post("http://localhost:8086/api/academics/specials/create",{
                     fullName:this.formData.fullName,
                     registrationNumber:this.formData.registrationNumber,
                     department:this.formData.department,
@@ -175,7 +175,7 @@ export default {
                 }).then(response => {
                     this.loading = false;
                     this.error = "";
-                    this.message = "Appeal created successfully";
+                    this.message = "Special created successfully";
                     console.log(response.data)
                 }).catch(errorMessage => {
                     this.loading = false;

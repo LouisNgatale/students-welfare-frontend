@@ -5,22 +5,15 @@
               <p class="path">Dashboard</p>
           </div>
       </div>
-      <div class="row">
-          <div class="col">
-              <div class="my-3 card-1">
 
-              </div>
-          </div>
-      </div>
       <div class="row mb-4">
           <div class="col">
-              <div class="card-2">
-
-              </div>
-          </div>
-          <div class="col">
-              <div class="notifications">
-                  <notifications></notifications>
+              <div class="card notifications">
+                  <div class="card-body">
+                      <p>Name: {{ results.FullName}}</p>
+                      <p>Class: {{ results.Course }}</p>
+                      <p>Allocated room: {{ results.Room }}</p>
+                  </div>
               </div>
           </div>
       </div>
@@ -30,12 +23,24 @@
 
 <script>
 import Notifications from "@/components/dashboard/Notifications";
+import axios from "axios";
 
 export default {
     components: {
         'notifications': Notifications,
     },
-name: "Dashboard"
+    data(){
+        return{
+            results:[]
+        }
+    },
+    created() {
+        axios.get("http://localhost:8086/api/profile")
+        .then(results => {
+            this.results = results.data;
+        });
+    },
+    name: "Dashboard"
 }
 </script>
 
@@ -61,10 +66,8 @@ name: "Dashboard"
 }
 .notifications{
     height: 300px;
-    border-radius: 12px;
     background: white;
     overflow: auto;
-    box-shadow: 0px 3px 6px rgba(0,0,0,.2);
 }
 p{
     margin: 0;

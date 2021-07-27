@@ -36,7 +36,7 @@
                           <img v-if="isActive" src="../../assets/icons/hostel-active.svg" alt="">
                           <img v-else src="../../assets/icons/hostel.svg" alt="">
                       </span>
-                            <span class="menu-title">Add Hostel</span>
+                            <span class="menu-title">Hostel Details</span>
                         </div>
                     </a>
                 </router-link>

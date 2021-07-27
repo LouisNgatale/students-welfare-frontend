@@ -217,12 +217,14 @@ export default {
                         data => {
                             this.message = data.data.message ?? "User registered!";
                             this.successful = true;
+							this.$router.push('/login');
                         },
                         error => {
                             this.message =
                                 error.response.data.message ||
                                 "Failed to register";
                             this.successful = false;
+							this.$router.push('/login');
                         }
                     );
 
